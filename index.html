@@ -7,428 +7,836 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0efe9;color:#1a1a1a;min-height:100vh;}
-.app{max-width:480px;margin:0 auto;padding:0.75rem 0.75rem 4rem;}
-.header{display:flex;align-items:center;gap:12px;margin-bottom:1.25rem;padding:1rem;background:white;border-radius:12px;border:1px solid #e0dfd8;}
-.header-logo{width:42px;height:42px;background:#185FA5;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.header-title{font-size:16px;font-weight:700;color:#1a1a1a;}
-.header-sub{font-size:11px;color:#888;margin-top:2px;}
-.section-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:#999;margin-bottom:8px;padding-left:2px;}
-.sections{display:flex;flex-direction:column;gap:5px;}
-.section-btn{display:flex;align-items:center;gap:12px;padding:12px 14px;background:white;border:1px solid #e0dfd8;border-radius:10px;cursor:pointer;text-align:left;width:100%;transition:all 0.15s;}
-.section-btn:hover{background:#f7f7f2;border-color:#ccc;}
-.section-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;}
-.section-info{flex:1;min-width:0;}
-.section-name{font-size:13px;font-weight:600;color:#1a1a1a;}
-.section-sub{font-size:11px;color:#999;margin-top:1px;}
-.section-count{font-size:11px;color:#aaa;background:#f0efe9;padding:3px 9px;border-radius:20px;white-space:nowrap;}
+.app{max-width:480px;margin:0 auto;padding:0 0 5rem;}
+
+/* ── BOTTOM NAV ─────────────────────────────── */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:white;border-top:1px solid #e0dfd8;display:flex;z-index:100;}
+.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px 12px;cursor:pointer;border:none;background:none;transition:all 0.15s;}
+.bn-icon{font-size:22px;margin-bottom:3px;}
+.bn-label{font-size:10px;font-weight:600;color:#aaa;letter-spacing:0.03em;}
+.bn-item.active .bn-label{color:#185FA5;}
+.bn-item.active .bn-icon{transform:scale(1.15);}
+
+/* ── SHARED ─────────────────────────────────── */
+.page{display:none;padding:0.75rem 0.75rem 0;}
+.page.active{display:block;}
+.page-header{background:white;border-radius:12px;border:1px solid #e0dfd8;padding:1rem 1.25rem;margin-bottom:1rem;display:flex;align-items:center;gap:12px;}
+.page-header-logo{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.page-header-title{font-size:15px;font-weight:700;color:#1a1a1a;line-height:1.2;}
+.page-header-sub{font-size:11px;color:#888;margin-top:2px;}
+.back-btn{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:#185FA5;background:none;border:none;cursor:pointer;padding:0 0 12px 0;}
 .detail{background:white;border:1px solid #e0dfd8;border-radius:12px;overflow:hidden;}
-.detail-img{width:100%;height:200px;object-fit:cover;display:block;background:#e8e7e0;}
+.detail-img{width:100%;height:190px;object-fit:cover;display:block;background:#e8e7e0;}
 .detail-body{padding:1.25rem;}
 .detail-salle{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:#999;margin-bottom:5px;}
-.detail-title{font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:12px;line-height:1.3;}
-.detail-text{font-size:14px;color:#333;line-height:1.72;margin-bottom:16px;}
-.tip{border-left:3px solid #EF9F27;padding:10px 14px;margin-bottom:14px;background:#FEF6E7;border-radius:0 8px 8px 0;}
-.tip-label{font-size:10px;font-weight:700;color:#854F0B;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;}
+.detail-title{font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:10px;line-height:1.3;}
+.detail-text{font-size:14px;color:#333;line-height:1.72;margin-bottom:14px;}
+.tip{border-left:3px solid #EF9F27;padding:10px 14px;margin-bottom:12px;background:#FEF6E7;border-radius:0 8px 8px 0;}
+.tip-label{font-size:10px;font-weight:700;color:#854F0B;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;}
 .tip-text{font-size:13px;color:#412402;line-height:1.6;}
-.funfact{background:#EBF4FD;border-radius:10px;padding:12px 14px;margin-bottom:16px;border-left:3px solid #185FA5;}
-.funfact-label{font-size:10px;font-weight:700;color:#0C447C;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;}
+.funfact{background:#EBF4FD;border-radius:10px;padding:12px 14px;margin-bottom:14px;border-left:3px solid #185FA5;}
+.funfact-label{font-size:10px;font-weight:700;color:#0C447C;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;}
 .funfact-text{font-size:13px;color:#042C53;line-height:1.6;}
+.tag{display:inline-block;font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px;margin-bottom:10px;background:#f0efe9;color:#888;}
+.sep{height:1px;background:#f0efe9;margin:12px 0;}
+.nav-row{display:flex;gap:8px;margin-top:14px;}
+.nav-btn{flex:1;padding:10px 8px;font-size:12px;font-weight:500;color:#555;background:#f0efe9;border:1px solid #e0dfd8;border-radius:8px;cursor:pointer;text-align:center;}
+.nav-btn:hover:not(:disabled){background:#e8e7e0;}
+.nav-btn:disabled{opacity:0.3;cursor:default;}
+.progress-bar{height:3px;background:#e0dfd8;border-radius:2px;margin-bottom:1rem;overflow:hidden;}
+.progress-fill{height:100%;background:#185FA5;border-radius:2px;transition:width 0.4s;}
 .items-title{font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;}
 .items-list{display:flex;flex-direction:column;gap:5px;}
 .item-row{display:flex;align-items:center;gap:10px;padding:11px 12px;background:#f7f7f2;border-radius:8px;cursor:pointer;transition:all 0.15s;border:1px solid transparent;}
 .item-row:hover{background:white;border-color:#e0dfd8;}
 .item-row-name{font-size:13px;color:#1a1a1a;flex:1;font-weight:500;}
 .item-row-arrow{font-size:16px;color:#ccc;}
-.nav-row{display:flex;gap:8px;margin-top:16px;}
-.nav-btn{flex:1;padding:10px 8px;font-size:12px;font-weight:500;color:#555;background:#f0efe9;border:1px solid #e0dfd8;border-radius:8px;cursor:pointer;transition:all 0.15s;text-align:center;}
-.nav-btn:hover:not(:disabled){background:#e8e7e0;}
-.nav-btn:disabled{opacity:0.3;cursor:default;}
-.back-btn{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:#185FA5;background:none;border:none;cursor:pointer;padding:0 0 12px 0;}
-.back-btn:hover{text-decoration:underline;}
-.progress-bar{height:3px;background:#e0dfd8;border-radius:2px;margin-bottom:1rem;overflow:hidden;}
-.progress-fill{height:100%;background:#185FA5;border-radius:2px;transition:width 0.4s ease;}
-.tag{display:inline-block;font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px;margin-bottom:10px;background:#f0efe9;color:#888;}
-.sep{height:1px;background:#f0efe9;margin:14px 0;}
+
+/* ── HOME PAGE ───────────────────────────────── */
+.home-hero{background:linear-gradient(135deg,#0C447C 0%,#185FA5 100%);border-radius:14px;padding:1.5rem 1.25rem;margin-bottom:1rem;color:white;}
+.home-hero-title{font-size:22px;font-weight:700;line-height:1.2;margin-bottom:6px;}
+.home-hero-sub{font-size:13px;opacity:0.8;line-height:1.5;}
+.home-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem;}
+.home-card{background:white;border:1px solid #e0dfd8;border-radius:12px;padding:1rem;cursor:pointer;transition:all 0.15s;text-align:left;}
+.home-card:hover{background:#f7f7f2;}
+.home-card-icon{font-size:28px;margin-bottom:8px;}
+.home-card-title{font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:3px;}
+.home-card-sub{font-size:11px;color:#888;}
+.home-card.wide{grid-column:1/-1;}
+.home-section-title{font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;padding-left:2px;}
+
+/* ── SALLES PAGE ─────────────────────────────── */
+.section-btn{display:flex;align-items:center;gap:12px;padding:12px 14px;background:white;border:1px solid #e0dfd8;border-radius:10px;cursor:pointer;text-align:left;width:100%;transition:all 0.15s;margin-bottom:5px;}
+.section-btn:hover{background:#f7f7f2;}
+.section-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;}
+.section-info{flex:1;min-width:0;}
+.section-name{font-size:13px;font-weight:600;color:#1a1a1a;}
+.section-sub{font-size:11px;color:#999;margin-top:1px;}
+.section-count{font-size:11px;color:#aaa;background:#f0efe9;padding:3px 9px;border-radius:20px;white-space:nowrap;}
+
+/* ── BATEAUX EXTÉRIEURS ──────────────────────── */
+.boat-card{background:white;border:1px solid #e0dfd8;border-radius:12px;overflow:hidden;margin-bottom:10px;cursor:pointer;transition:all 0.15s;}
+.boat-card:hover{border-color:#bbb;}
+.boat-card-img{width:100%;height:140px;object-fit:cover;background:#e8e7e0;}
+.boat-card-body{padding:0.875rem 1rem;}
+.boat-card-type{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#888;margin-bottom:3px;}
+.boat-card-name{font-size:16px;font-weight:700;color:#1a1a1a;margin-bottom:4px;}
+.boat-card-desc{font-size:12px;color:#666;line-height:1.5;}
+
+/* ── QUIZ ────────────────────────────────────── */
+.quiz-block{margin-top:8px;}
+.cycle-tabs{display:flex;gap:6px;margin-bottom:14px;}
+.cycle-tab{flex:1;padding:7px 4px;font-size:11px;font-weight:600;border:1px solid #e0dfd8;border-radius:8px;background:white;cursor:pointer;text-align:center;color:#888;transition:all 0.15s;}
+.cycle-tab.active{background:#185FA5;color:white;border-color:#185FA5;}
+.q-block{margin-bottom:16px;}
+.q-num{font-size:10px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;}
+.q-text{font-size:14px;font-weight:600;color:#1a1a1a;line-height:1.5;margin-bottom:9px;}
+.q-options{display:flex;flex-direction:column;gap:7px;}
+.q-opt{padding:10px 14px;border:1px solid #e0dfd8;border-radius:8px;background:white;cursor:pointer;font-size:13px;color:#333;text-align:left;transition:all 0.15s;line-height:1.4;}
+.q-opt:hover:not(.disabled){background:#f7f7f2;}
+.q-opt.correct{background:#EAF3DE;border-color:#3B6D11;color:#27500A;font-weight:600;}
+.q-opt.wrong{background:#FCEBEB;border-color:#A32D2D;color:#501313;}
+.q-opt.disabled{cursor:default;}
+.q-explain{font-size:12px;color:#555;line-height:1.5;margin-top:7px;padding:8px 12px;background:#f7f7f2;border-radius:6px;display:none;}
+.q-explain.visible{display:block;}
+.quiz-score{background:white;border:1px solid #e0dfd8;border-radius:12px;padding:1.25rem;text-align:center;margin-top:6px;}
+.quiz-score-num{font-size:36px;font-weight:700;color:#185FA5;}
+.quiz-score-label{font-size:13px;color:#888;margin-top:4px;}
+.quiz-score-msg{font-size:14px;font-weight:600;color:#1a1a1a;margin-top:10px;}
+.quiz-reset{margin-top:12px;padding:10px 20px;background:#185FA5;color:white;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;}
 </style>
 </head>
 <body>
-<div class="app">
-  <div class="header">
-    <div class="header-logo">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M3 18 Q12 7 21 18" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-        <rect x="2" y="18" width="20" height="3" rx="1.5" fill="white"/>
-      </svg>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="bn-item active" onclick="goPage('home')" id="btn-home">
+    <div class="bn-icon">🏠</div><div class="bn-label">Accueil</div>
+  </button>
+  <button class="bn-item" onclick="goPage('salles')" id="btn-salles">
+    <div class="bn-icon">🏛️</div><div class="bn-label">Salles</div>
+  </button>
+  <button class="bn-item" onclick="goPage('ext')" id="btn-ext">
+    <div class="bn-icon">⚓</div><div class="bn-label">Bateaux</div>
+  </button>
+  <button class="bn-item" onclick="goPage('quiz')" id="btn-quiz">
+    <div class="bn-icon">🎯</div><div class="bn-label">Quiz</div>
+  </button>
+</nav>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PAGE : ACCUEIL                              -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+  <div style="padding:0.75rem 0.75rem 0;">
+    <div class="home-hero">
+      <div class="home-hero-title">Port-Musée Douarnenez</div>
+      <div class="home-hero-sub">Guide animateur · 9 salles · 7 bateaux extérieurs · Quiz par cycle</div>
     </div>
-    <div>
-      <div class="header-title">Port-Musée Douarnenez</div>
-      <div class="header-sub">Guide animateur · 9 salles · 60+ objets</div>
+    <div class="home-section-title">Accès rapide</div>
+    <div class="home-cards">
+      <div class="home-card" onclick="goPage('salles')">
+        <div class="home-card-icon">🏛️</div>
+        <div class="home-card-title">Salles intérieures</div>
+        <div class="home-card-sub">9 salles · 60+ objets</div>
+      </div>
+      <div class="home-card" onclick="goPage('ext')">
+        <div class="home-card-icon">⛵</div>
+        <div class="home-card-title">Bateaux extérieurs</div>
+        <div class="home-card-sub">7 bateaux · estacades</div>
+      </div>
+      <div class="home-card" onclick="goPage('quiz')">
+        <div class="home-card-icon">🎯</div>
+        <div class="home-card-title">Quiz Incollables</div>
+        <div class="home-card-sub">3 cycles · 5 questions/salle</div>
+      </div>
+      <div class="home-card" onclick="showTips()">
+        <div class="home-card-icon">💡</div>
+        <div class="home-card-title">Conseils de visite</div>
+        <div class="home-card-sub">Ordre · Durée · Astuces</div>
+      </div>
     </div>
-  </div>
-  <div id="view-sections">
-    <div class="section-label">Choisir une salle</div>
-    <div class="sections" id="sections-list"></div>
-  </div>
-  <div id="view-section" style="display:none;">
-    <button class="back-btn" onclick="showSections()">← Toutes les salles</button>
-    <div class="progress-bar"><div class="progress-fill" id="prog-section"></div></div>
-    <div class="detail" id="section-detail"></div>
-  </div>
-  <div id="view-item" style="display:none;">
-    <button class="back-btn" id="back-section-btn">← Retour à la salle</button>
-    <div class="detail" id="item-detail"></div>
+    <div class="home-section-title">Infos pratiques</div>
+    <div id="tips-block" style="display:none;">
+      <div class="detail" style="margin-bottom:10px;">
+        <div class="detail-body">
+          <div class="detail-title" style="font-size:16px;">Conseils de visite</div>
+          <div class="tip" style="margin-bottom:10px;">
+            <div class="tip-label">Ordre recommandé</div>
+            <div class="tip-text">1. Salle maquette (toujours en 1er) → 2. Formes universelles → 3. Moteur → 4. Espace maritime → 5. Navigation aux clochers → 6. Salle des gréements → 7. Conserveries → 8. Ports-abris → 9. L'Humanité<br><br>Bateaux extérieurs : en fin de visite ou en séparant intérieur / extérieur.</div>
+          </div>
+          <div class="funfact">
+            <div class="funfact-label">Durées indicatives</div>
+            <div class="funfact-text">Visite intérieure complète : 1h30–2h · Bateaux extérieurs seuls : 45min · Visite avec quiz : prévoir 30min supplémentaires</div>
+          </div>
+          <div class="tip">
+            <div class="tip-label">Gestes clés</div>
+            <div class="tip-text">Commencer toujours par la maquette. Laisser les enfants explorer avant d'expliquer. Mimer les gestes (cabanage, filet, tannage). Toujours finir par une question ouverte.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="detail">
+      <div class="detail-body">
+        <div class="detail-salle">Port-Musée Douarnenez</div>
+        <div class="detail-title" style="font-size:15px;">Présentation du musée</div>
+        <div class="detail-text">Le Port-Musée est un musée maritime unique en France. Il présente à la fois une collection de bateaux en milieu naturel (sur les estacades du Port-Rhu) et des collections permanentes sur la pêche, la construction navale et la vie maritime de Douarnenez et du monde entier.</div>
+        <div class="funfact">
+          <div class="funfact-label">À retenir</div>
+          <div class="funfact-text">Douarnenez était en 1924 le premier port sardinier de Bretagne et comptait le plus grand nombre de marins inscrits de France. Toute la ville vivait de la mer.</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PAGE : SALLES                               -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="page" id="page-salles">
+  <div style="padding:0.75rem 0.75rem 0;">
+    <div id="view-sections-list">
+      <div class="page-header">
+        <div class="page-header-logo" style="background:#185FA5;">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 16 Q11 6 19 16" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/><rect x="2" y="16" width="18" height="2.5" rx="1.25" fill="white"/></svg>
+        </div>
+        <div>
+          <div class="page-header-title">Salles intérieures</div>
+          <div class="page-header-sub">9 salles · 60+ objets · Quiz intégrés</div>
+        </div>
+      </div>
+      <div id="sections-list"></div>
+    </div>
+    <div id="view-section" style="display:none;">
+      <button class="back-btn" onclick="showSectionsList()">← Toutes les salles</button>
+      <div class="progress-bar"><div class="progress-fill" id="prog-section"></div></div>
+      <div class="detail" id="section-detail"></div>
+    </div>
+    <div id="view-item" style="display:none;">
+      <button class="back-btn" id="back-section-btn">← Retour à la salle</button>
+      <div class="detail" id="item-detail"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PAGE : BATEAUX EXTÉRIEURS                   -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="page" id="page-ext">
+  <div style="padding:0.75rem 0.75rem 0;">
+    <div id="view-boats-list">
+      <div class="page-header">
+        <div class="page-header-logo" style="background:#0C447C;">
+          <span style="font-size:20px;">⚓</span>
+        </div>
+        <div>
+          <div class="page-header-title">Bateaux extérieurs</div>
+          <div class="page-header-sub">7 bateaux sur les estacades du Port-Rhu</div>
+        </div>
+      </div>
+      <div id="boats-list"></div>
+    </div>
+    <div id="view-boat" style="display:none;">
+      <button class="back-btn" onclick="showBoatsList()">← Tous les bateaux</button>
+      <div class="detail" id="boat-detail"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PAGE : QUIZ                                 -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="page" id="page-quiz">
+  <div style="padding:0.75rem 0.75rem 0;">
+    <div id="view-quiz-list">
+      <div class="page-header">
+        <div class="page-header-logo" style="background:#639922;">
+          <span style="font-size:20px;">🎯</span>
+        </div>
+        <div>
+          <div class="page-header-title">Quiz Incollables</div>
+          <div class="page-header-sub">Choisir une salle pour commencer</div>
+        </div>
+      </div>
+      <div class="cycle-tabs" id="quiz-cycle-tabs">
+        <div class="cycle-tab active" onclick="setQuizCycle(0)" id="qtab-0">Cycle 1<br><span style="font-size:10px;opacity:0.8">Maternelle</span></div>
+        <div class="cycle-tab" onclick="setQuizCycle(1)" id="qtab-1">Cycle 2<br><span style="font-size:10px;opacity:0.8">CP–CE2</span></div>
+        <div class="cycle-tab" onclick="setQuizCycle(2)" id="qtab-2">Cycle 3<br><span style="font-size:10px;opacity:0.8">CM1–6e</span></div>
+      </div>
+      <div id="quiz-sections-list"></div>
+    </div>
+    <div id="view-quiz-session" style="display:none;">
+      <button class="back-btn" onclick="showQuizList()">← Choisir une autre salle</button>
+      <div id="quiz-session-content"></div>
+    </div>
+  </div>
+</div>
+
 <script>
+/* ─────────────────────────────────────────
+   DONNÉES
+───────────────────────────────────────── */
 const I="https://guide.port-musee.ovh/sites/default/files/styles/mobile/public/images/2024/07/";
-const data=[
+
+const boatsData=[
+  {id:"an-eostig",name:"An Eostig",type:"Chaloupe sardinière",color:"#639922",
+   img:"https://www.port-musee.org/m/static/086fe1b7550d4577d6a2b794ec863692/b315d/an-eostig.jpg",
+   text:"An Eostig ('le Rossignol' en breton) a été construite dans le cadre du concours des 'bateaux des côtes de France'. Mise à l'eau lors des Fêtes maritimes de 1992, cette grande chaloupe sardinière semi-pontée reproduit à l'identique les chaloupes construites après les crises de la sardine du début du XXe siècle : plus robustes et taillées pour la haute mer, elles permettaient de diversifier la pêche quand la sardine venait à manquer.",
+   tip:"Point de départ idéal pour parler des chaloupes vues dans la salle de la maquette. Faire le lien entre la maquette intérieure et le vrai bateau à flot.",
+   funfact:"An Eostig a été reconstruit à partir de l'unique épave de chaloupe sardinière découverte sur la plage de Kervigen en 1984. Sans cette épave, on n'aurait jamais pu reconstruire ce type de bateau !"},
+  {id:"anna-rosa",name:"Anna-Rosa",type:"Galéasse norvégienne",color:"#185FA5",
+   img:"https://www.port-musee.org/m/static/f6896eb3d21d72fb3c5038ada90fa75f/b315d/anna-rosa.jpg",
+   text:"Anna-Rosa a été construite en 1893 dans le fjord norvégien de Hardanger. Ce caboteur à voile robuste exerce, au début du XXe siècle, comme près de 2000 autres galéasses norvégiennes, le commerce de la rogue et de la morue séchée dans toute l'Europe.",
+   tip:"Expliquer que sans l'Anna-Rosa et ses semblables, pas de sardines ! La rogue (œufs de morue) était l'appât indispensable pour attirer les sardines. Un commerce international au cœur de la pêche bretonne.",
+   funfact:"Une vidéo à 360° permet de visiter l'intérieur du bateau virtuellement. Il existe aussi un modèle 3D complet de l'Anna-Rosa téléchargeable sur le site du musée !"},
+  {id:"dieu-protege",name:"Dieu Protège",type:"Gabare de l'Iroise",color:"#BA7517",
+   img:"https://www.port-musee.org/m/static/cf9263126f654473b32dc2933d930d6e/b315d/dieu-protege.jpg",
+   text:"Dieu Protège est une gabare de la mer d'Iroise. Pendant 35 ans, ce navire travaille à l'extraction et au transport de sable. À partir de 1951, année de son lancement, Dieu Protège livre à Brest le sable nécessaire aux chantiers de reconstruction de la ville, après les massives destructions de la Seconde Guerre Mondiale.",
+   tip:"Un lien fort avec l'histoire : Brest a été détruite à 80% pendant la guerre. Ce bateau a littéralement contribué à reconstruire la ville. Faire réfléchir : à quoi sert le sable dans la construction ?",
+   funfact:"Dieu Protège pouvait transporter 150 tonnes de sable par voyage ! Pour reconstruire Brest, il a fallu des centaines de milliers de tonnes de sable. Un seul bateau, des années de travail."},
+  {id:"nizwa",name:"Nizwa",type:"Boutre arabe",color:"#534AB7",
+   img:"https://www.port-musee.org/m/static/26ad1f99549c23326a89628f37e335fc/b315d/nizwa.jpg",
+   text:"Le 25 juin 2014, Nizwa, boutre arabe, est arrivé dans le Port-Rhu à Douarnenez. Ce bateau privé est depuis amarré au sein de l'espace à flot du Port-Musée. Le boutre est le bateau traditionnel des mers d'Arabie, du golfe Persique à la mer Rouge, utilisé depuis des millénaires pour le commerce et la pêche.",
+   tip:"Le Nizwa illustre parfaitement le thème des 'formes universelles' des salles intérieures : un bateau venu d'un autre bout du monde, qui côtoie des bateaux bretons. La mer unit toutes les cultures.",
+   funfact:"Nizwa est le nom d'une ville d'Oman, ancien centre culturel et commercial de la péninsule arabique. Les boutres omanais naviguaient jusqu'en Inde, en Afrique de l'Est et en Asie du Sud-Est — sans GPS, sans cartes précises !"},
+  {id:"roi-gradlon",name:"Roi Gradlon",type:"Baliseur",color:"#0F6E56",
+   img:"https://www.port-musee.org/m/static/c039956029566acefddb70b2e2663a59/b315d/a.jpg",
+   text:"Construit en 1948 au Havre, le Roi Gradlon était affecté depuis 1952 à Lorient, chargé de l'entretien des phares et balises dans les eaux du Morbihan, de la Laïta à la Vilaine. Après 66 ans de travail, dont 62 ans au sein de l'Armement des phares et balises, le Roi Gradlon a été désarmé en 2014.",
+   tip:"Le Roi Gradlon propose une visite virtuelle de sa salle des machines. Une occasion unique pour les enfants de voir l'intérieur d'un navire de service ! Roi Gradlon est aussi le roi légendaire de la ville d'Ys.",
+   funfact:"La ville d'Ys est la légendaire cité engloutie sous la mer de Bretagne. Le roi Gradlon l'a abandonnée pour la sauver quand sa fille Dahut a ouvert les portes aux flots. Une des légendes les plus célèbres de Bretagne !"},
+  {id:"saint-denys",name:"Saint-Denys",type:"Remorqueur portuaire",color:"#993C1D",
+   img:"https://www.port-musee.org/m/static/97d4ecdc3aca83ea860f87fd8bf5628c/b315d/saint-denys.jpg",
+   text:"Le Saint-Denys, construit en Écosse en 1929, appartenait à la société de remorquage de Falmouth. Ces navires, facilement reconnaissables à leur coque verte et leur cheminée blanche et noire, attiraient l'attention avec leur silhouette robuste, courte et large. Un remorqueur à vapeur qui consommait 40 tonnes de charbon par semaine.",
+   tip:"Faire le lien avec la salle du moteur à l'intérieur. Le Saint-Denys est un exemple parfait de la transition vapeur → moteur. Sa coque verte le rend facilement reconnaissable dans le port.",
+   funfact:"40 tonnes de charbon par semaine — c'est l'équivalent du poids de 5 éléphants ! Et il fallait des hommes, les 'chauffeurs', pour alimenter la chaudière en charbon en continu, dans une chaleur extrême."},
+  {id:"scarweather",name:"Scarweather",type:"Bateau-phare",color:"#D4537E",
+   img:"https://www.port-musee.org/m/static/8e43bb6bcb464e7c079000bce177d334/b315d/scarweather.jpg",
+   text:"Le Scarweather a été construit en 1947 par le chantier Philip and Sons à Dartmouth (Grande-Bretagne) pour la Trinity Corporation (équivalent des phares et balises). Long de 41m, large de 7,50m, il pèse 534 tonnes. Il était ancré en permanence aux endroits dangereux où l'on ne peut pas construire de phare fixe.",
+   tip:"Faire calculer : 534 tonnes ≈ 500 voitures ! Et pourtant il flotte. Principe d'Archimède. Montrer la couleur rouge : pourquoi rouge ? Pour être visible de loin, même dans la brume.",
+   funfact:"Les marins qui vivaient à bord du Scarweather restaient en mer pendant des semaines sans pouvoir accoster. Un phare habité, isolé au milieu des flots, par tous les temps !"}
+];
+
+const sectionsData=[
 {id:0,color:"#639922",name:"Salle de la maquette",subtitle:"Histoire de la pêche sardinière",
-intro:"La grande maquette du port du Rosmeur reconstitue Douarnenez dans les années 1920-30. C'est une œuvre de mémoire réalisée par un ancien marin douarneniste. Au début du XXe siècle, les rues et quais de Douarnenez sont envahis par le travail de la mer. Dans les ruelles, ça sent la saumure, le poisson, les œufs de poisson et l'huile chaude des fritures. Les filets sont suspendus aux façades des maisons, aux mâts des bateaux.",
-tip:"Commencer TOUJOURS ici. La maquette pose le contexte de toute la visite. En 1924, Douarnenez avait le plus grand nombre de marins inscrits maritimes de France ! Laisser les enfants la regarder 30 secondes en silence avant de parler.",
-funfact:"En 1924, Douarnenez était le premier port sardinier de Bretagne. Les femmes travaillaient dans les conserveries, les hommes étaient pêcheurs ou marins. Toute la ville vivait de la mer.",
+intro:"La grande maquette du port du Rosmeur reconstitue Douarnenez dans les années 1920-30. Au début du XXe siècle, les rues et quais de Douarnenez sont envahis par le travail de la mer. On y sent la saumure, le poisson et l'huile chaude des fritures.",
+tip:"Commencer TOUJOURS ici. La maquette pose le contexte de toute la visite. En 1924, Douarnenez avait le plus grand nombre de marins inscrits de France ! Laisser les enfants regarder 30 secondes en silence avant de parler.",
+funfact:"En 1924, Douarnenez était le premier port sardinier de Bretagne avec 13 000 habitants, dont 5000 marins. Toute la ville vivait de la mer.",
 img:I+"salle-de-la-maquette-2_0.jpg?itok=dGac6ANG",
 items:[
-{name:"Objets personnels des marins",img:I+"objets-personnels-marin.jpg?itok=vdxUSh0L",
-text:"En mer, quand on a un peu de temps, on fabrique des boîtes en bois de vieilles barriques pour protéger ses papiers, ses articles de toilette ou ses aiguilles à remmaillage. Chaque boîte est différente.\n\nLa boîte verte : son propriétaire a voulu marquer l'année 1946, juste après la Seconde Guerre Mondiale. Le couvercle coulissant porte un beau cœur et de jolies fleurs.\n\nLa boîte de J-B Hamon porte son nom et son numéro d'inscription maritime — le livret obligatoire de tout marin.\n\nLa boîte très colorée représente un bateau de pêche d'un côté et un navire militaire de l'autre — un pêcheur qui rêvait de la marine ?",
-tip:"Faire observer les différences entre les boîtes : chaque marin avait sa propre façon de décorer. Demander aux enfants : 'Qu'est-ce que vous mettriez dans votre boîte à vous ?'",
-funfact:"La boîte de Joseph Le Doaré l'a accompagné jusqu'en Afrique du Sud pour pêcher le thon. Il s'en servait comme boîte à rasoir. À bord, l'eau étant si précieuse, un marin ne se rasait qu'une fois rentré au port, avant de retrouver sa famille !"},
-{name:"La chaloupe sardinière",img:I+"chaloupe_1.jpg?itok=Q_SDj9cd",
-text:"La chaloupe mesure 10 mètres. Simple et efficace, manœuvrée avec deux voiles, conçue pour pêcher quelques jours le long de la côte. Les longues et lourdes rames permettent de maintenir le bateau face au vent pendant la pêche et d'avancer quand le vent est absent.\n\nL'équipage type : le patron, 3 matelots et le mousse, âgé d'environ 12 ans.",
-tip:"Faire compter les enfants : combien de personnes sur le bateau ? Qui est le plus jeune ? Comment s'appelle-t-il ? (le mousse). Vers 1900, les chantiers de Douarnenez fabriquaient 140 bateaux par an — tous identiques, construits sur le même gabarit !",
-funfact:"140 chaloupes construites par an à Douarnenez vers 1900 — toutes identiques, fabriquées sur le même gabarit. Une véritable production industrielle artisanale, sur le Port-Rhu ici même."},
-{name:"Le filet droit flottant",img:I+"filet-droit_2.jpg?itok=RbebCxAP",
-text:"Le filet mesure 30 m × 10 m pour la pêche à la sardine. Coloré et protégé au sulfate de cuivre aux propriétés bactéricides, il est d'un beau bleu qui se fond dans les eaux claires de l'été. Le patron en possède un, qu'il sèche sur les mâts de la chaloupe. Chaque marin en possède aussi un.",
-tip:"Donner l'échelle : 30 m c'est la longueur de 3 bus ! On attachait plusieurs filets bout à bout pour atteindre jusqu'à 7 km. La pêche au filet demandait une très grande force physique.",
-funfact:"Les sardines ont rétréci depuis 100 ans ! Il y a un siècle, une sardine mesurait 17-20 cm. Aujourd'hui : 8 cm en moyenne. Et leur durée de vie est passée de 7-8 ans à 1-2 ans. Cause : l'acidification des océans."},
-{name:"Le tannage des voiles",img:I+"tannage-de-voile-2.jpg?itok=LPTHsffl",
-text:"Le tannage protège indispensablement les voiles. Avant chaque campagne de pêche, les voiles sont étalées sur les quais et les cales. Toute l'équipe applique le produit à grandes brosses. À Douarnenez, les voiles des chaloupes étaient presque noires à cause d'une double dose de caoutchouc.",
-tip:"Les voiles noires de Douarnenez formaient une image reconnaissable dans toute la baie. Après la Première Guerre Mondiale, le caoutchouc remplacé par de l'ocre — d'où les voiles rouges-orangées des vieilles photos.",
-funfact:"Le caoutchouc venait d'acacias indiens, dilué dans des bacs d'eau très chaude. Chaque charpentier avait sa propre recette secrète transmise de père en fils — un vrai secret de famille !"},
-{name:"Rames et vergues posées le long du mur",img:I+"vergues-et-les-rames-poses-le-long-du-mur-3.jpg?itok=u6NPnW7O",
-text:"Pendant les périodes creuses, entre les campagnes de pêche, les bateaux sont désarmés et les mâts, rames et vergues posés le long du mur. Le quai est un espace de travail et de stockage communal.",
-tip:"Montrer aux enfants que le quai était un espace de vie partagé : on y rangeait le matériel, on y discutait, on y réparait. Ce n'était pas simplement un endroit pour les bateaux — c'était le cœur social du village.",
-funfact:"La campagne sardinière durait de juin à octobre environ. Le reste de l'année, les marins désarmaient leurs bateaux et devaient trouver d'autres revenus : charpente, travaux agricoles, petits métiers..."},
-{name:"Les acheteuses de poisson",img:"",
-text:"Les acheteuses, toutes des femmes, sont embauchées par les différentes conserveries pour négocier le prix du poisson. Ces anciennes ouvrières, considérées comme trop vieilles pour travailler à l'usine, sont des expertes du poisson. Elles savent distinguer le bon du mauvais.\n\nElles sont toutes là — au bout du quai — 20 ou parfois 30 — à guetter les premières voiles. En breton, on les appelle les 'komizerez', les commissionnaires. Dès que les bateaux arrivent, elles crient les prix qu'elles sont prêtes à payer au patron pour remporter les premières enchères.",
-tip:"Les komizerez : des femmes considérées 'trop vieilles' pour l'usine mais dont l'expertise était irremplaçable ! Elles connaissaient le poisson comme personne. Faire réfléchir : est-ce qu'on traitait bien ces femmes ?",
-funfact:"Les komizerez pouvaient faire ou défaire la journée d'un patron pêcheur. Si elles décidaient collectivement de ne pas acheter, le marin rentrait bredouille. Un pouvoir économique réel, malgré leur statut social précaire."},
-{name:"L'usine rouge",img:I+"l-usine-rouge_0.jpg?itok=E6suQU-R",
-text:"L'usine rouge se reconnaît à sa façade de briques rouges et ses piliers en béton. Un des premiers bâtiments en béton armé de la région. Elle devient usine Gaston Chancerelle et Compagnie en 1926. Ses activités cessent en 1970. La fumée des hautes cheminées et les rejets industriels dans l'environnement marquaient la ville de Douarnenez.\n\nPour en savoir plus sur les conserveries et les femmes qui y travaillaient, visitez l'exposition 'L'art de fixer les saisons' au premier étage.",
-tip:"L'usine rouge est encore visible depuis le musée. La pointer si possible. Elle symbolise toute l'ère industrielle sardinière de Douarnenez.",
-funfact:"L'odeur de sardine frite se sentait dans toute la ville. Les habitants de Douarnenez vivaient littéralement avec cette odeur — certains disaient qu'elle sentait l'argent !"},
-{name:"Le grand môle",img:I+"le-grand-mole.jpg?itok=lYvffz4g",
-text:"Le grand môle, qui abrite le port naturel, a été construit entre 1862 et 1868. Il mesurait initialement 150 mètres. Vingt ans plus tard, il a été agrandi de 135 mètres supplémentaires.",
-tip:"Sans le môle, pas de port protégé — pas de port sardinier. Cette infrastructure a été le levier du développement économique de Douarnenez au XIXe siècle.",
-funfact:"Le môle a été construit manuellement, à la force des bras et à la brouette. Des centaines d'ouvriers ont travaillé pendant des années pour construire cette digue qui protège encore aujourd'hui les bateaux."},
-{name:"La criée",img:I+"la-criee.jpg?itok=JoPcMPrW",
-text:"La vieille criée de Douarnenez a été construite au début du XXe siècle. En 1919, elle a été transformée en espace de fabrication de glace, embarquée sur les bateaux pour conserver le poisson. À la criée, les mareyeurs attiraient les clients potentiels en annonçant les meilleurs prix à la cantonade. Aujourd'hui, les mareyeurs achètent toujours leurs marchandises à la criée — celle de Guilvinec est la plus importante de Bretagne.",
-tip:"Expliquer la criée aux enfants : c'est une vente aux enchères du poisson. Qui offre le plus ? Le premier arrivé est souvent le mieux servi — la fraîcheur du poisson est cruciale.",
-funfact:"La criée de Guilvinec traite aujourd'hui des centaines de tonnes de poisson par jour, avec un système d'affichage électronique des prix en temps réel. Une modernisation totale du même principe inventé il y a des siècles !"},
-{name:"Plomarc'h",img:I+"les-plomarc-h_0.jpg?itok=Pt6nHi9O",
-text:"Le premier port de Douarnenez s'est développé aux alentours de Plomarc'h, un ancien lieu d'abri. Les Romains s'y sont installés au IIe siècle après J.-C. Ils y produisaient le Garum. Les citernes qu'ils utilisaient pour saler le poisson ont été restaurées et peuvent être visitées.",
-tip:"Le Garum ! Une sauce de poisson fermenté que les Romains utilisaient comme condiment — l'ancêtre du nuoc-mâm ou de la sauce Worcestershire. Douarnenez produisait du poisson en conserve depuis les Romains !",
-funfact:"Le Garum était l'un des condiments les plus prisés et les plus coûteux de l'Empire Romain. Des amphores de Garum de Douarnenez ont été retrouvées jusqu'à Rome ! La ville exportait déjà son poisson il y a 2000 ans."},
-{name:"Le local du lampiste",img:I+"le-local-du-lampiste_0.jpg?itok=reCiuaeI",
-text:"Le local du lampiste est dédié aux éclairages publics. Les quais et le grand môle sont bien éclairés — Douarnenez se veut une ville moderne. Avec l'automatisation des éclairages, les lampistes n'ont plus été nécessaires et les mareyeurs ont pris leur place.",
-tip:"Un métier qui n'existe plus : le lampiste. Chaque soir, il allumait toutes les lampes du port à la main. Chaque matin, il les éteignait. Un homme (ou une femme) pour faire ce que fait aujourd'hui un simple minuteur.",
-funfact:"Le métier de lampiste a disparu avec l'électricité automatique. C'est un exemple parmi des centaines de métiers liés à la mer qui ont disparu au XXe siècle : gardien de phare, calfat, goudronneur de voiles..."},
-{name:"Le treizour",img:I+"cannot-le-treizour-2_0.jpg?itok=Ide3bIsU",
-text:"Le petit canot s'appelle 'Le treizour' en breton. Il servait de navette entre les chaloupes ancrées en baie ou le long des quais, et la terre. Il était manœuvré par un passeur qui occupait des locaux sur les quais.",
-tip:"Le treizour est le taxi de l'eau du port. Les marins ne pouvaient pas toujours amener leur grande chaloupe jusqu'au quai — le treizour faisait la liaison. Un service essentiel, souvent oublié.",
-funfact:"Le droit de passage sur l'eau s'achetait et se vendait dans certains ports. La concession du passage était une affaire de famille, transmise de père en fils — parfois pendant des générations !"},
-{name:"L'abri du marin",img:I+"l-abri-du-marin_1.jpg?itok=ksEBiovN",
-text:"L'abri du marin de Douarnenez, créé par l'architecte René Darde, a ouvert ses portes en 1914. Cette œuvre caritative, avec ses 12 abris sur la côte bretonne, a été fondée par Jacques de Thézac. Ému par la misère touchant le corps et l'esprit de nombreux marins (analphabétisme, alcoolisme, tuberculose...), il a décidé d'améliorer leurs conditions de vie. Les abris servaient d'havres de paix et d'écoles pour les marins. Ils ont fermé dans les années 1980.",
-tip:"Parler des conditions de vie difficiles : souvent loin de chez eux, peu alphabétisés, exposés à l'alcool et aux maladies. Ces abris étaient des lieux de solidarité concrets. Faire le lien avec les conditions des sardinières.",
-funfact:"Jacques de Thézac était un aristocrate breton qui a consacré une grande partie de sa fortune personnelle à ces abris. 12 abris sur toute la côte bretonne — une chaîne de solidarité unique en France, créée bien avant l'État-providence."},
-{name:"Le thonier",img:I+"thonier-rentrant-au-port.jpg?itok=Eh6Xy6r4",
-text:"Avec ses bras 'en l'air', ses tangons, le thonier est facilement reconnaissable. Il pêche le thon à la ligne avec des lignes attachées aux tangons — les deux grandes perches de 15 à 20 mètres de chaque côté du mât. Cette méthode est née de la reconversion suite au déclin de la pêche sardinière. Les thoniers sont bien plus grands que les chaloupes : le thon se pêche loin des côtes et les campagnes durent plusieurs semaines.",
-tip:"Faire le lien historique : quand la sardine a disparu (crises sardinières des années 1880-1910), les pêcheurs ont dû se reconvertir vers le thon. Des voyages jusqu'aux Açores et en Afrique — des semaines loin de leur famille.",
-funfact:"Certains marins douarnenistes partaient jusqu'aux côtes d'Afrique pour pêcher le thon — 3 à 6 semaines de mer ! Certains n'ont jamais revu leurs familles. La mer donnait et prenait."},
-{name:"L'épave de Kervigen",img:I+"epave-de-kervigen_0.jpg?itok=EEyZzg_h",
-text:"Alors que la baie de Douarnenez abritait des centaines de chaloupes sardinières au début du XXe siècle, il n'en reste plus une seule aujourd'hui — sauf cette épave découverte sur la plage de Kervigen en 1984. Elle date probablement de 1910-1915. Vers 1920, les chaloupes ont progressivement disparu. Deux reconstructions basées sur des relevés de l'épave ont été construites : Telenn Mor et An Eostig.",
-tip:"Point fort émotionnel : personne n'a pensé à garder ces bateaux quand ils sont devenus obsolètes. L'épave de Kervigen est l'unique témoignage physique. Sans elle, on n'aurait que des photos.",
-funfact:"L'épave de Kervigen est l'unique chaloupe sardinière authentique conservée au monde. Sans cette découverte en 1984, toute la tradition de construction de ces bateaux aurait disparu sans trace matérielle."}
+{name:"Objets personnels des marins",img:I+"objets-personnels-marin.jpg?itok=vdxUSh0L",text:"En mer, quand on a un peu de temps, on fabrique des boîtes en bois de vieilles barriques pour protéger ses papiers, ses articles de toilette ou ses aiguilles à remmaillage. Chaque boîte est différente et raconte une histoire personnelle.",tip:"Faire observer les différences entre les boîtes. 'Qu'est-ce que vous mettriez dans votre boîte ?'",funfact:"La boîte de Joseph Le Doaré l'a accompagné jusqu'en Afrique du Sud pour pêcher le thon. Il ne se rasait qu'une fois rentré au port — l'eau étant trop précieuse en mer !"},
+{name:"La chaloupe sardinière",img:I+"chaloupe_1.jpg?itok=Q_SDj9cd",text:"La chaloupe mesure 10 mètres. Équipage type : le patron, 3 matelots et le mousse, âgé d'environ 12 ans. Vers 1900, les chantiers de Douarnenez fabriquaient 140 bateaux par an — tous identiques, sur le même gabarit.",tip:"Faire compter : combien de personnes ? Qui est le plus jeune ? Comment s'appelle-t-il ?",funfact:"140 chaloupes par an — toutes identiques. Une véritable production industrielle artisanale, sur le Port-Rhu ici même."},
+{name:"Le filet droit flottant",img:I+"filet-droit_2.jpg?itok=RbebCxAP",text:"Le filet mesure 30m × 10m. Coloré au sulfate de cuivre (bactéricide), d'un beau bleu qui se fond dans les eaux claires. On attachait plusieurs filets bout à bout jusqu'à 7 km !",tip:"30m c'est la longueur de 3 bus ! La pêche au filet demandait une très grande force physique.",funfact:"Les sardines ont rétréci : 17-20 cm il y a 100 ans, 8 cm aujourd'hui. Et leur durée de vie est passée de 7-8 ans à 1-2 ans. Cause : l'acidification des océans."},
+{name:"Le tannage des voiles",img:I+"tannage-de-voile-2.jpg?itok=LPTHsffl",text:"Avant chaque campagne, les voiles sont étalées sur les quais et toute l'équipe applique le tannin à grandes brosses. À Douarnenez : double dose de caoutchouc, voiles presque noires.",tip:"Les voiles noires de Douarnenez étaient reconnaissables dans toute la baie. Après la 1ère Guerre Mondiale, l'ocre a remplacé le caoutchouc.",funfact:"Le caoutchouc venait d'acacias indiens. Chaque charpentier avait sa recette secrète transmise de père en fils !"},
+{name:"Les acheteuses (komizerez)",img:"",text:"Ces femmes, anciennes ouvrières jugées 'trop vieilles' pour l'usine, négociaient le prix du poisson sur le quai pour les conserveries. 20 à 30 d'un coup, guettant les premières voiles. En breton : les 'komizerez'.",tip:"Les komizerez avaient un vrai pouvoir économique malgré leur statut précaire. Si elles décidaient de ne pas acheter, le marin rentrait bredouille.",funfact:"Les komizerez pouvaient faire ou défaire la journée d'un patron. Une coalition des komizerez, c'était redoutable !"},
+{name:"L'usine rouge",img:I+"l-usine-rouge_0.jpg?itok=E6suQU-R",text:"Reconnaissable à sa façade de briques rouges et ses piliers en béton. Un des premiers bâtiments en béton armé de la région. Usine Chancerelle à partir de 1926. Fermée en 1970.",tip:"L'usine rouge est encore visible depuis le musée. Elle symbolise toute l'ère industrielle sardinière.",funfact:"L'odeur de sardine frite se sentait dans toute la ville. Les habitants disaient que ça sentait l'argent !"},
+{name:"Le grand môle",img:I+"le-grand-mole.jpg?itok=lYvffz4g",text:"Construit entre 1862 et 1868 pour abriter le port naturel. Initialement 150 mètres. Agrandi de 135 mètres vingt ans plus tard.",tip:"Sans le môle, pas de port protégé — donc pas de port sardinier. Le levier du développement économique de Douarnenez.",funfact:"Construit manuellement, à la force des bras et à la brouette. Des centaines d'ouvriers pendant des années."},
+{name:"La criée",img:I+"la-criee.jpg?itok=JoPcMPrW",text:"Construite au début du XXe siècle. En 1919, transformée en espace de fabrication de glace pour conserver le poisson. À la criée, les mareyeurs criaient les meilleurs prix.",tip:"La criée : vente aux enchères du poisson. Le premier arrivé est le mieux servi — la fraîcheur est cruciale !",funfact:"La criée de Guilvinec est aujourd'hui la plus importante de Bretagne, avec des centaines de tonnes de poisson par jour."},
+{name:"Plomarc'h",img:I+"les-plomarc-h_0.jpg?itok=Pt6nHi9O",text:"Le premier port de Douarnenez s'est développé à Plomarc'h. Les Romains s'y sont installés au IIe siècle et y produisaient le Garum — sauce de poisson fermenté.",tip:"Le Garum : ancêtre du nuoc-mâm. Douarnenez exportait du poisson conservé il y a 2000 ans !",funfact:"Des amphores de Garum de Douarnenez ont été retrouvées jusqu'à Rome ! Le poisson de Douarnenez traversait l'Empire romain."},
+{name:"Le treizour",img:I+"cannot-le-treizour-2_0.jpg?itok=Ide3bIsU",text:"Petit canot-taxi du port. Il faisait la navette entre les chaloupes ancrées en baie et la terre.",tip:"Le treizour : la station de taxi de l'eau. Le droit de passage se transmettait de père en fils dans certaines familles.",funfact:"Ce droit de passage était une concession héréditaire — parfois pendant des générations !"},
+{name:"L'abri du marin",img:I+"l-abri-du-marin_1.jpg?itok=ksEBiovN",text:"Ouvert en 1914, fondé par Jacques de Thézac pour améliorer les conditions de vie des marins (analphabétisme, alcoolisme, tuberculose...). 12 abris sur la côte bretonne. Fermés dans les années 1980.",tip:"Ces abris étaient des lieux de solidarité concrets — bien avant l'État-providence.",funfact:"Jacques de Thézac était un aristocrate qui a consacré sa fortune personnelle à ces 12 abris sur toute la côte bretonne."},
+{name:"Le thonier",img:I+"thonier-rentrant-au-port.jpg?itok=Eh6Xy6r4",text:"Reconnaissable à ses tangons 'en l'air' (15-20m de chaque côté du mât). Né de la reconversion après le déclin de la sardine. Campagnes de plusieurs semaines jusqu'aux Açores et en Afrique.",tip:"Lien historique : quand la sardine a disparu, les pêcheurs se sont reconvertis vers le thon — bien plus loin, bien plus longtemps.",funfact:"Certains marins partaient 3 à 6 semaines en mer pour le thon. Certains n'ont jamais revu leur famille."},
+{name:"L'épave de Kervigen",img:I+"epave-de-kervigen_0.jpg?itok=EEyZzg_h",text:"Des centaines de chaloupes en baie de Douarnenez au début du XXe siècle — et cette seule épave subsiste, découverte en 1984. À partir d'elle, deux reconstructions ont été réalisées : Telenn Mor et An Eostig.",tip:"Point fort émouvant : personne n'a songé à garder ces bateaux quand ils sont devenus obsolètes.",funfact:"L'épave de Kervigen est la seule chaloupe sardinière authentique conservée au monde."}
 ]},
-{id:1,color:"#BA7517",name:"Formes immuables et universelles",subtitle:"Les embarcations primitives du monde",
-intro:"Des bateaux à taille humaine, liés à la nature et à la vie des hommes. Là où les forêts sont denses, on creuse des troncs. Là où le roseau pousse, on tresse. Ces formes n'ont pas changé depuis des millénaires. On les retrouve sur tous les continents — sans que ces peuples se soient jamais rencontrés.",
-tip:"Question d'entrée : 'À votre avis, le premier bateau de l'histoire ressemblait à quoi ?' Laisser les enfants proposer. L'idée clé : l'humain partout dans le monde a trouvé les mêmes solutions.",
-funfact:"Le mot 'universel' est le mot-clé. Les mêmes techniques se retrouvent en Irlande, en Afrique, au Vietnam, en Polynésie — sans que ces peuples se soient jamais rencontrés !",
-img:"",
+{id:1,color:"#BA7517",name:"Formes immuables et universelles",subtitle:"Embarcations primitives du monde",
+intro:"Des bateaux à taille humaine, liés à la nature et à la vie des hommes. Ces formes n'ont pas changé depuis des millénaires. On les retrouve sur tous les continents — sans que ces peuples se soient rencontrés.",
+tip:"Question d'entrée : 'À votre avis, le premier bateau de l'histoire ressemblait à quoi ?' L'idée clé : l'humain partout dans le monde a trouvé les mêmes solutions.",
+funfact:"Ces bateaux sont immuables (inchangés depuis des millénaires) ET universels : même solutions en Irlande, Afrique, Vietnam, Polynésie — sans contact entre ces civilisations !",img:"",
 items:[
-{name:"Les coracles",img:"https://guide.port-musee.ovh/sites/default/files/styles/mobile/public/images/2025/04/20240427_160245.jpg?itok=sXoFX9fn",
-text:"Ces petits bateaux s'appellent des coracles. Héritiers d'une tradition millénaire de bateaux en peaux, ils ressemblent aux kayaks des Inuit. La charpente du coracle gallois est faite de longues lattes de frêne plantées en terre pour former les contours du futur bateau. La coque est entrelacée de nattes d'osier. Très léger, il peut être porté sur le dos. Utilisé pour la pêche au saumon ou comme annexe.",
-tip:"Faire remarquer que le coracle ressemble à un panier ! C'est exactement la même technique de vannerie. 'Qui fait de la vannerie chez vous ?' Ce bateau est fabriqué comme un panier — une idée géniale.",
-funfact:"Un coracle se porte sur le dos comme un sac à dos en sortant de l'eau — c'est sa propre valise ! Cette technique a plus de 2000 ans et est encore utilisée aujourd'hui au Pays de Galles et en Inde."},
-{name:"Le curragh irlandais",img:I+"curragh-irlandais_0.jpg?itok=lgTLA3a0",
-text:"Le curragh, embarcation traditionnelle de la côte ouest d'Irlande, ressemble au coracle mais est conçu pour la haute mer. Charpente légère recouverte de toile goudronnée. Long de 4 à 7 m, large de 1 à 1,50 m, il peut porter jusqu'à 2 tonnes ! La construction traditionnelle se transmet de père en fils depuis des siècles. Le modèle présenté a été construit en 1982 à Moorstown.",
-tip:"Insister sur la résistance : 2 tonnes dans une coque aussi légère ! La flexibilité du matériau absorbe les chocs des vagues — plus efficace que la rigidité.",
-funfact:"Des moines irlandais auraient traversé l'Atlantique en curragh au VIe siècle pour atteindre l'Amérique — 500 ans avant Christophe Colomb ! En 1976, Tim Severin a refait ce voyage pour le prouver. Il a réussi."},
-{name:"Bateau-panier du Vietnam",img:I+"bateau-panier-du-vietnam.jpg?itok=ZyC1Q9WD",
-text:"Ce bateau-panier vient d'un village de la province côtière de Baria-Vung-Tau au Vietnam. Technique ancestrale : on creuse un trou dans le sol, on y descend un tissu de lattes de bambou tressées, des pierres maintiennent la forme. Imperméabilisé avec de la bouse de buffle. Encore très utilisé aujourd'hui.",
-tip:"Le fun fact que les enfants adorent : la bouse de buffle comme imperméabilisant ! Technique 100% naturelle, 100% efficace. 'Qui aurait cette idée ?'",
-funfact:"Ce bateau est fabriqué et utilisé au Vietnam aujourd'hui exactement comme il y a 2000 ans. Certains pêcheurs vietnamiens refusent de changer de technique — ils disent que c'est le meilleur bateau pour leurs côtes !"},
-{name:"Pirogue de Guinée (Afrique)",img:I+"pirogue-guineenne_0.jpg?itok=DekhwCp6",
-text:"Construite par deux jeunes du pays en 1984. Le tronc d'arbre est évidé à l'aide d'un outil tranchant — les marques sont encore visibles. Une autre technique : évider le tronc avec du feu. La pirogue la plus simple porte 1 personne debout. Celles pour la chasse, la pêche ou la guerre : jusqu'à 10 personnes.",
-tip:"Montrer les traces d'outils sur le bois : fait à la main, sans machine ! Comparer avec la chaloupe : deux façons de faire un bateau en bois, deux cultures différentes.",
-funfact:"Certaines pirogues monoxyles retrouvées en Europe ont plus de 8000 ans — plus vieilles que les pyramides d'Égypte ! Parfaitement conservées dans des tourbières irlandaises et néerlandaises."},
-{name:"Pirogue à balancier de Nouvelle-Guinée",img:I+"pirogue-a-balancier_0.jpg?itok=0G2Up__V",
-text:"Pirogue du fleuve Sépik en Nouvelle-Guinée, années 1960. Composée d'une coque monoxyle et d'un balancier flotteur stabilisateur. Les ornements sculptés représentent des têtes d'oiseaux, des formes humanoïdes et des gueules de crocodiles. Le crocodile est une divinité tutélaire pour les peuples du Sépik.",
-tip:"Faire mimer l'équilibre : sans le balancier, le bateau chavire immédiatement ! Le balancier est une invention géniale pour la navigation hauturière.",
-funfact:"La pirogue à balancier a permis le peuplement de tout l'Pacifique il y a 3000 ans — la plus grande migration maritime de l'histoire humaine. Ces bateaux ont parcouru des milliers de kilomètres sans boussole ni carte !"},
-{name:"Amiral III — chaland de l'Adour",img:I+"chaland-amiral-iii_0.jpg?itok=2HbeYSZu",
-text:"Construit en 1979, il assure le transport de personnes et de marchandises sur l'Adour, en amont de Bayonne. La coque est assemblée sans clous. La proue et la poupe sont greffées sur la section centrale par des pièces en Y. Ce type d'assemblage vient des origines monoxyles : les premiers chalands étaient taillés dans un seul tronc, comme les pirogues africaines.",
-tip:"L'Amiral III fait le lien entre la pirogue primitive et les bateaux de transport modernes. La technique a évolué, le principe reste le même : un creux dans du bois pour flotter.",
-funfact:"Les plus grands chalands de l'Adour pouvaient mesurer jusqu'à 100 mètres ! Et l'assemblage sans clous est si robuste que ces bateaux durent des décennies — sans rouiller puisqu'il n'y a pas de métal !"},
-{name:"Tatara — bateau de pêche de Taïwan",img:I+"bateau-de-peche-tatara.jpg?itok=gUHr8Sj-",
-text:"Barque traditionnelle du groupe ethnique Tao de l'île de Lanyu, au large de Taïwan. Coque en planches assemblées avec des chevilles en bois, imperméabilisée avec du kapok. Datant de 1970, richement décoré. Les petites figures répétées représentent le héros légendaire Magomaog, qui a enseigné la construction navale aux Yamei.",
-tip:"Ce bateau est une œuvre d'art autant qu'un outil. Les yeux sculptés à la proue 'voient' le chemin. Dans de nombreuses cultures, les bateaux ont des yeux — les enfants connaissent-ils d'autres exemples ?",
-funfact:"La construction d'un Tatara est une cérémonie sacrée qui peut durer plusieurs mois — chaque étape est accompagnée de prières et d'offrandes. Le bateau est vivant, il mérite d'être traité avec respect."}
+{name:"Les coracles",img:"https://guide.port-musee.ovh/sites/default/files/styles/mobile/public/images/2025/04/20240427_160245.jpg?itok=sXoFX9fn",text:"Petits bateaux en osier tressé recouvert de peau ou de toile. Charpente de lattes de frêne, coque en nattes tressées. Très léger, peut être porté sur le dos.",tip:"Ce bateau ressemble à un panier ! Même technique que la vannerie. Encore utilisé au Pays de Galles et en Inde.",funfact:"Un coracle se porte sur le dos comme un sac à dos — c'est sa propre valise ! Technique de 2000 ans toujours en usage."},
+{name:"Le curragh irlandais",img:I+"curragh-irlandais_0.jpg?itok=lgTLA3a0",text:"Embarcation traditionnelle de la côte ouest d'Irlande pour la haute mer. Charpente légère recouverte de toile goudronnée. Long de 4 à 7m, peut porter jusqu'à 2 tonnes !",tip:"2 tonnes dans une coque aussi légère ! La flexibilité absorbe les chocs — plus efficace que la rigidité.",funfact:"Des moines irlandais auraient traversé l'Atlantique en curragh au VIe siècle. Tim Severin l'a prouvé en 1976 en refaisant la traversée !"},
+{name:"Bateau-panier du Vietnam",img:I+"bateau-panier-du-vietnam.jpg?itok=ZyC1Q9WD",text:"Tissé en lattes de bambou. Imperméabilisé à la bouse de buffle. Encore très utilisé aujourd'hui, exactement comme il y a 2000 ans.",tip:"La bouse de buffle comme imperméabilisant ! 100% naturel, 100% efficace, 2000 ans d'existence. Les enfants adorent ce fun fact.",funfact:"Ce bateau est fabriqué et utilisé au Vietnam aujourd'hui exactement comme il y a 2000 ans. Certains pêcheurs refusent de changer !"},
+{name:"Pirogue de Guinée",img:I+"pirogue-guineenne_0.jpg?itok=DekhwCp6",text:"Tronc évidé à l'outil tranchant — les marques sont encore visibles. Technique alternative : évider au feu. Peut porter de 1 à 10 personnes selon la taille.",tip:"Montrer les traces d'outils : fait à la main ! Comparer avec la chaloupe : deux façons de faire un bateau en bois.",funfact:"Des pirogues monoxyles retrouvées en Europe ont plus de 8000 ans — plus vieilles que les pyramides ! Conservées dans des tourbières."},
+{name:"Pirogue à balancier de Nouvelle-Guinée",img:I+"pirogue-a-balancier_0.jpg?itok=0G2Up__V",text:"Coque monoxyle + balancier flotteur stabilisateur. Ornements sculptés : têtes d'oiseaux, formes humanoïdes, gueules de crocodiles. Fleuve Sépik, années 1960.",tip:"Sans le balancier, le bateau chavire immédiatement ! Le faire mimer aux enfants.",funfact:"La pirogue à balancier a permis le peuplement de tout le Pacifique il y a 3000 ans — la plus grande migration maritime de l'histoire !"},
+{name:"Tatara — bateau de pêche de Taïwan",img:I+"bateau-de-peche-tatara.jpg?itok=gUHr8Sj-",text:"Barque traditionnelle des Tao de l'île de Lanyu. Planches assemblées avec chevilles en bois, imperméabilisée au kapok. Richement décoré : les figures représentent le héros légendaire Magomaog.",tip:"Ce bateau est une œuvre d'art autant qu'un outil. Les yeux sculptés à la proue 'voient' le chemin.",funfact:"La construction d'un Tatara est une cérémonie sacrée de plusieurs mois — chaque étape accompagnée de prières et d'offrandes."}
 ]},
 {id:2,color:"#3B6D11",name:"Le moteur et la timonerie",subtitle:"La révolution mécanique en mer",
-intro:"L'arrivée du moteur a tout changé. D'abord à vapeur puis à pétrole, il a nécessité un poste de commandement fermé : la timonerie. En 1923, seulement 4 bateaux motorisés en Bretagne. Dans les années 1930, toute la flotte est motorisée. Les pêcheurs résistaient au moteur — ils croyaient que le bruit faisait fuir le poisson !",
-tip:"Insister sur la résistance des pêcheurs : il a fallu des années pour les convaincre. Puis ils n'ont plus voulu revenir à la voile. La vie des marins a radicalement changé en 20 ans.",
-funfact:"En 1923, seulement 4 bateaux motorisés en Bretagne. En 1940, toute la flotte roule au moteur. Une révolution complète en moins de 20 ans.",
-img:"",
+intro:"D'abord à vapeur puis à pétrole, le moteur a tout changé. Il a nécessité un poste de commandement fermé : la timonerie. En 1923, seulement 4 bateaux motorisés en Bretagne. En 1940, toute la flotte l'est.",
+tip:"Les pêcheurs résistaient au moteur — ils croyaient que le bruit ferait fuir le poisson ! Puis ils n'ont plus voulu revenir à la voile.",
+funfact:"4 bateaux motorisés en Bretagne en 1923. Toute la flotte motorisée en 1940. Une révolution complète en moins de 20 ans.",img:"",
 items:[
-{name:"Maquette de machine à vapeur",img:I+"model-reduit-machine-a-vapeur-2.jpg?itok=1AQ33MI_",
-text:"Cette maquette est une machine à triple expansion — la forme la plus récente de la machine à vapeur. Apparues vers 1807, généralisées après 1860. Deux éléments clés : la chaudière (produit la vapeur) et la machine (transforme la vapeur en énergie mécanique). Tourne à 20 tours/minute pour actionner des roues à aubes ou des hélices.",
-tip:"Mimer le principe : eau chauffée = vapeur, vapeur pousse des pistons, pistons font tourner l'hélice. Même principe qu'une cocotte-minute ! Faire le son 'pschhhht' — les enfants adorent.",
-funfact:"La machine à vapeur était trop grosse pour les petits bateaux de pêche ! Elle était réservée aux grands navires et remorqueurs. Les petits bateaux ont dû attendre le moteur à pétrole pour se motoriser."},
-{name:"Le Reliant — remorqueur à vapeur anglais",img:I+"le-reliant-maquette-bateau-a-vapeur-anglais_0.jpg?itok=BzMYv4Xe",
-text:"Remorqueur anglais propulsé à la vapeur et aux roues à aubes, conçu pour pousser et tirer les caboteurs sur le canal de Manchester. La salle des machines est sous la cheminée. Les deux ancres à la poupe empêchaient le câble de remorquage de s'accrocher. Mis à la retraite en 1967.",
-tip:"Faire remarquer la taille de la cheminée par rapport au bateau — plus la cheminée est haute, mieux la fumée monte. Et le bateau sent le charbon à 500 mètres !",
-funfact:"Le canal de Manchester (58 km) a été creusé entre 1887 et 1894 pour que les navires atteignent Manchester sans passer par Liverpool. Des remorqueurs comme le Reliant y travaillaient 24h/24 !"},
-{name:"Moteur de propulsion — Katie-Ann",img:I+"moteur-de-propulsion-chalutier-anglais.jpg?itok=mm1JOjn2",
-text:"Moteur de propulsion d'un chalutier anglais des années 1920-30 : le Katie-Ann. Diesel 4 temps, 18 cylindres, 152 chevaux. D'abord équipé à la voile puis reconverti au moteur, il était manœuvré par 4 hommes au large de Swansea pour pêcher dans le canal de Bristol et la mer d'Irlande.",
-tip:"Comparer avec le moteur d'une voiture : même principe ! 152 chevaux c'est comme une petite voiture — mais pour faire avancer un chalutier entier en pleine mer.",
-funfact:"Le passage de la vapeur au diesel a tout changé : bien plus efficace, bien moins encombrant, sans besoin d'allumer une chaudière des heures à l'avance. Les mécaniciens de marine ont dû tout réapprendre."},
-{name:"La pompe à essence du port de Rosmeur",img:I+"pompe-a-essence.jpg?itok=Lalx6eeJ",
-text:"Installée au port du Rosmeur au début du XXe siècle, fabriquée par la société Joseph Raphaën. Facilement déplaçable sur deux roues pour atteindre tous les coins des quais. Le compteur enregistrait les débits de 5 en 5 litres avec un cadran et une sonnette.",
-tip:"La pompe à essence sur le port : c'est la station-service des bateaux ! Même principe que pour une voiture, mais le carburant vient au bateau plutôt que l'inverse.",
-funfact:"Cette pompe sur roues est l'ancêtre des camions-citernes de ravitaillement maritime. Aujourd'hui, les grands ports ont des terminaux fixes, mais le principe — amener le carburant au bateau — est resté le même."},
-{name:"La passerelle du thonier Saint Quido",img:I+"passerelle-thonier-saint-quido.jpg?itok=njUnJJ-F",
-text:"Appartenait au chalutier Saint Quido, construit par Hénaff à Guilvinec en 1966. De 1981, il sillonnait du golfe de Gascogne aux Açores pour pêcher le thon. Équipage de 6 hommes, campagnes de 18 jours à 1 mois. La passerelle : cerveau du bateau — instruments de navigation, commandes, électronique, radio.",
-tip:"Faire entrer les enfants dans la passerelle ! Tenir la barre, regarder les instruments. 'Qu'est-ce que vous voyez ? À quoi ça sert ?' Les laisser explorer avant d'expliquer.",
-funfact:"Sur les campagnes de 3-4 semaines, 6 hommes vivaient dans cet espace minuscule par tous les temps, parfois avec des vagues de 5 mètres. La passerelle était leur seul lien avec le monde — par radio."}
+{name:"Maquette de machine à vapeur",img:I+"model-reduit-machine-a-vapeur-2.jpg?itok=1AQ33MI_",text:"Machine à triple expansion. Chaudière (produit la vapeur) + machine (transforme en énergie). Tourne à 20 tr/min.",tip:"Principe : eau chauffée = vapeur, vapeur pousse des pistons, pistons font tourner l'hélice. Comme une cocotte-minute géante !",funfact:"Trop grosse pour les petits bateaux de pêche ! Les petits bateaux ont dû attendre le moteur à pétrole."},
+{name:"Le Reliant — remorqueur à vapeur",img:I+"le-reliant-maquette-bateau-a-vapeur-anglais_0.jpg?itok=BzMYv4Xe",text:"Remorqueur anglais à vapeur et roues à aubes pour le canal de Manchester. Mis à la retraite en 1967.",tip:"La taille de la cheminée par rapport au bateau : plus haute, mieux la fumée monte !",funfact:"Le canal de Manchester (58 km) a été creusé entre 1887 et 1894. Les remorqueurs y travaillaient 24h/24 !"},
+{name:"Moteur de propulsion — Katie-Ann",img:I+"moteur-de-propulsion-chalutier-anglais.jpg?itok=mm1JOjn2",text:"Moteur du chalutier anglais Katie-Ann (années 1920-30). Diesel 4 temps, 18 cylindres, 152 chevaux. D'abord à voile puis reconverti.",tip:"Même principe que le moteur d'une voiture ! 152 chevaux pour faire avancer un chalutier entier.",funfact:"Le diesel divisait par 10 le poids du combustible par rapport au charbon."},
+{name:"La pompe à essence du port de Rosmeur",img:I+"pompe-a-essence.jpg?itok=Lalx6eeJ",text:"Installée au port du Rosmeur au début du XXe siècle. Sur deux roues pour aller jusqu'aux bateaux partout sur le quai.",tip:"La station-service des bateaux ! Le carburant vient au bateau, pas l'inverse.",funfact:"Cette pompe sur roues est l'ancêtre des camions-citernes de ravitaillement maritime."},
+{name:"La passerelle du Saint Quido",img:I+"passerelle-thonier-saint-quido.jpg?itok=njUnJJ-F",text:"Chalutier de 1966. Du golfe de Gascogne aux Açores pour pêcher le thon. 6 hommes, campagnes de 18 jours à 1 mois.",tip:"Faire entrer les enfants dans la passerelle ! Tenir la barre, regarder les instruments.",funfact:"Sur 3-4 semaines de campagne, 6 hommes vivaient dans cet espace par tous les temps, parfois avec des vagues de 5 mètres."}
 ]},
 {id:3,color:"#EF9F27",name:"S'emparer de l'espace maritime",subtitle:"Yachts, caboteurs et bateaux de pêche",
-intro:"Vitesse, capacité de stockage, légèreté, maniabilité — autant de critères qui définissent différentes familles de bateaux. Le yachting apparaît au XIXe siècle, combinant sport et plaisir. Les bateaux de pêche et caboteurs sont définis par leur grande capacité de stockage et appartiennent à un univers traditionnel, oral et régional.",
-tip:"Question d'accroche : 'À votre avis, qui avait le droit de naviguer pour le plaisir au XIXe siècle ?' La bourgeoisie s'amuse, les marins travaillent — et parfois les mêmes bateaux font les deux.",
-funfact:"La Viviane (1860) est l'un des tout premiers bateaux de plaisance de France. La bourgeoisie a inventé la voile-loisir en embauchant des marins locaux pour les piloter — les mêmes qui pêchaient la sardine la semaine !",
-img:"",
+intro:"Vitesse, capacité, légèreté, maniabilité — autant de critères qui définissent différentes familles de bateaux. Le yachting apparaît au XIXe siècle. Les bateaux de pêche et caboteurs appartiennent à un univers traditionnel et régional.",
+tip:"'À votre avis, qui avait le droit de naviguer pour le plaisir au XIXe siècle ?' La bourgeoisie s'amuse, les marins travaillent — et parfois les mêmes bateaux font les deux.",
+funfact:"La Viviane (1860) est l'un des tout premiers bateaux de plaisance de France. La bourgeoisie a inventé la voile-loisir en embauchant des marins locaux pour piloter !",img:"",
 items:[
-{name:"Pietr — tjotter hollandais",img:"",
-text:"Le tjotter est un bateau de plaisance hollandais traditionnel. Conçu pour naviguer sur les eaux peu profondes des polders et canaux des Pays-Bas, sa dérive pivotante lui permet de naviguer sans s'échouer. Le Pietr représente la tradition de yachting des pays du nord de l'Europe.",
-tip:"Les Pays-Bas : un pays sous le niveau de la mer, avec des milliers de km de canaux. Ici, le bateau est aussi courant que la voiture en France !",
-funfact:"Les Pays-Bas comptent plus de 6000 km de voies navigables. Il y a des villages où on fait ses courses en bateau — comme en voiture mais sur l'eau !"},
-{name:"Vagabonde III — voilier de plaisance",img:"",
-text:"Représente l'évolution du voilier de plaisance vers des formes plus sportives et performantes. Conçu pour la régate et la croisière côtière — le plaisir de la navigation pour lui-même, pas pour le travail ou le transport.",
-tip:"Faire le contraste avec la chaloupe sardinière : même matière (bois), même milieu (mer), mais deux usages et deux classes sociales totalement différents.",
-funfact:"Le mot 'yacht' vient du néerlandais 'jacht' qui signifiait 'bateau de chasse'. À l'origine, les nobles l'utilisaient pour chasser pirates et contrebandiers — avant d'en faire des bateaux de loisir !"},
-{name:"Daisy — dinghy anglais de loisir",img:"",
-text:"Le dinghy est un petit voilier de loisir, léger et maniable, conçu pour la navigation côtière et la régate. Le Daisy représente la tradition britannique du yachting populaire — une façon de démocratiser la voile au début du XXe siècle.",
-tip:"Le dinghy est l'ancêtre du laser et des petits voiliers d'école de voile d'aujourd'hui. Des enfants du groupe ont-ils déjà fait de la voile ?",
-funfact:"Le Royaume-Uni a été le premier pays à développer la voile de loisir pour la classe moyenne. Dès les années 1880, des clubs de voile populaires se créaient dans les ports anglais."},
-{name:"Eclaireur II — voilier de plaisance",img:"",
-text:"Illustre l'évolution des voiliers de croisière côtière français. Ces bateaux confortables permettaient à la bourgeoisie de croiser le long des côtes bretonnes — la Bretagne devenait une destination touristique grâce au chemin de fer et aux voiliers.",
-tip:"Faire le lien : les régates de Douarnenez attiraient des bateaux du monde entier dès les années 1850. La ville connue autant pour ses sardines que pour sa voile !",
-funfact:"Les premières régates de Douarnenez datent des années 1850 — avant même les Jeux Olympiques modernes (1896) ! La voile était déjà un sport de compétition organisé."},
-{name:"Mac Miche — canot breton",img:"",
-text:"Canot breton typique de la côte finistérienne. Polyvalent, il servait aussi bien à la pêche côtière qu'au transport local. Représente la transition entre le bateau de travail pur et le bateau de loisir.",
-tip:"Le 'bateau du dimanche' breton : en semaine on pêche, le dimanche on se promène — avec le même bateau ! La frontière entre travail et loisir était floue.",
-funfact:"Les bateaux bretons avaient souvent des noms savoureux, parfois bretons, parfois des surnoms familiaux transmis depuis des générations — une tradition de poésie maritime."},
-{name:"Catraïa — bateau méditerranéen",img:"",
-text:"Bateau polyvalent méditerranéen qu'on retrouve sous différents noms du Portugal au Maroc. Sa forme simple et efficace traverse les siècles. Utilisée aussi bien à la pêche qu'au transport de marchandises — l'exemple parfait d'un bateau 'universel' méditerranéen.",
-tip:"Faire le lien avec la salle des formes universelles : la Catraïa montre qu'une bonne forme se retrouve sur des milliers de km de côtes, utilisée par des cultures différentes.",
-funfact:"Le nom 'catraïa' vient du portugais. Ce bateau était si répandu en Méditerranée que chaque région lui donnait un nom différent — mais c'était toujours la même forme ! Un design parfait, copié partout."},
-{name:"Ar Spinec — bateau de pêche breton",img:"",
-text:"'Ar Spinec' signifie 'l'épine' en breton. Robuste et stable, conçu pour les eaux agitées de la côte atlantique. Son nom breton rappelle que chaque région avait ses propres types de bateaux, adaptés à ses conditions spécifiques.",
-tip:"La côte bretonne avec ses vents forts, ses courants et ses rochers demande un bateau différent de la Méditerranée calme. Chaque bateau est une réponse à un environnement particulier.",
-funfact:"En France, on comptait plus de 300 types de bateaux de pêche différents au XIXe siècle ! Chaque port avait le sien. Aujourd'hui, cette diversité a presque complètement disparu."}
+{name:"Pietr — tjotter hollandais",img:"",text:"Bateau de plaisance hollandais pour les eaux peu profondes des polders. Sa dérive pivotante lui permet de naviguer sans s'échouer.",tip:"Les Pays-Bas : pays sous le niveau de la mer avec des milliers de km de canaux. Le bateau aussi courant que la voiture !",funfact:"Les Pays-Bas comptent plus de 6000 km de voies navigables. Certains villages font leurs courses en bateau !"},
+{name:"Catraïa — bateau méditerranéen",img:"",text:"Bateau polyvalent méditerranéen qu'on retrouve du Portugal au Maroc. Pêche et transport selon les besoins. Forme universelle.",tip:"Lien avec la salle précédente : une bonne forme de bateau adoptée sur des milliers de km de côtes.",funfact:"Chaque région méditerranéenne lui donnait un nom différent — mais c'était toujours la même forme !"},
+{name:"Anna-Rosa — caboteur norvégien",img:"",text:"Caboteur de 1893 transportant la rogue (œufs de morue séchés) comme appât pour les sardines. Un commerce international au cœur de la pêche bretonne.",tip:"Sans la rogue venue de Norvège, pas de sardines ! Le cabotage international au service de la pêche locale.",funfact:"La rogue était l'appât miracle pour la sardine. Les Bretons en importaient des tonnes depuis la Norvège chaque saison."},
+{name:"La Viviane — 1860",img:"",text:"L'un des tout premiers bateaux de plaisance de France. La bourgeoisie organisait des régates en embauchant des marins locaux.",tip:"1860, la Viviane : les mêmes marins qui pêchaient la sardine en semaine pilotaient les yachts bourgeois le weekend !",funfact:"Les Régates de Douarnenez (années 1850) sont parmi les plus anciennes de France. Elles ont rendu Douarnenez célèbre dans toute l'Europe."}
 ]},
 {id:4,color:"#534AB7",name:"Navigation aux clochers",subtitle:"Le cabotage et les modèles réduits",
-intro:"La 'navigation aux clochers' désigne la navigation côtière guidée par les clochers des villes et villages. C'est le cabotage — le transport de marchandises par voie maritime. De cap en cap, le caboteur était le 'camion de la mer'. Dans ses cales : matériaux de construction, grain, bois de chauffage, vin, sel — puis avec l'industrialisation : engrais, ciment, charbon.",
-tip:"Les marins repéraient leur position grâce aux clochers visibles depuis la mer. Deux points à terre dans l'axe l'un de l'autre donnaient une ligne de position. Deux lignes croisées = une position précise. Un savoir transmis oralement.",
-funfact:"Les caboteurs étaient surnommés 'écraseurs de crabes' car ils naviguaient si près des côtes qu'une simple anse leur suffisait pour s'ancrer. Ils allaient là où les grands navires ne pouvaient pas !",
-img:"",
+intro:"La navigation aux clochers désigne la navigation côtière guidée par les clochers des villes et villages. Le caboteur était le 'camion de la mer'. De cap en cap, il transportait tout : grain, sel, bois, charbon...",
+tip:"Les marins repéraient leur position en alignant des points à terre. Deux lignes croisées = position précise. Savoir transmis uniquement oralement.",
+funfact:"'Écraseurs de crabes' : les caboteurs naviguaient si près des côtes qu'une simple anse leur suffisait pour mouiller. Là où les grands navires ne pouvaient pas aller !",img:"",
 items:[
-{name:"Vitrine 1 — 3 modèles de caboteurs",img:"",
-text:"Trois modèles de caboteurs bretons et européens. Le caboteur transportait toutes sortes de marchandises entre les ports côtiers — c'était le transport routier de l'époque, mais par la mer. Les routes terrestres souvent impraticables, la mer offrait une voie plus rapide.",
-tip:"Avant le chemin de fer (arrivé à Brest en 1865), presque toutes les marchandises de Bretagne voyageaient par mer. Charbon pour les forges, granit pour les bâtiments, beurre pour Paris — tout passait par les caboteurs.",
-funfact:"De Paris à Brest en diligence : 5 jours. En caboteur de Lorient à Brest par mer favorable : quelques heures. La mer était l'autoroute de l'époque !"},
-{name:"Vitrine 2 — Bateaux de pêche portugais",img:"",
-text:"Collection de maquettes de bateaux de pêche portugais. Chaque région côtière portugaise a développé ses propres types de bateaux, adaptés à ses conditions locales.",
-tip:"Comparer avec les bateaux bretons : même activité (pêche), même matière (bois), mais des formes différentes. L'Atlantique portugais n'est pas la mer d'Iroise.",
-funfact:"Les Portugais pêchaient la morue jusqu'en Terre-Neuve et en Islande depuis le XVe siècle ! C'est la tradition des 'bacalhoeiros' — des marins qui passaient 6 mois par an en mer, loin de tout."},
-{name:"Collection de bateaux de pêche français",img:"",
-text:"Modèles de bateaux de pêche de différentes régions françaises et européennes. Illustre la diversité des solutions trouvées par les hommes pour pêcher : chaque littoral a engendré ses propres formes.",
-tip:"Jeu : regarder les silhouettes et deviner d'où vient le bateau. Les bateaux méditerranéens sont différents des atlantiques — en observant bien, on peut deviner !",
-funfact:"En France, plus de 300 types de bateaux de pêche différents au XIXe siècle ! Aujourd'hui cette diversité a presque complètement disparu — uniformisation par les matériaux (fibre de verre) et les moteurs."}
+{name:"Vitrine 1 — Modèles de caboteurs",img:"",text:"Trois modèles de caboteurs bretons et européens. Le caboteur transportait tout entre les ports côtiers. Avant le chemin de fer, la mer était l'autoroute.",tip:"Paris-Brest en diligence : 5 jours. Lorient-Brest en caboteur par vent favorable : quelques heures !",funfact:"Avant le chemin de fer (Brest en 1865), presque tout voyageait par mer. Charbon, granit, beurre pour Paris — tout par caboteur."},
+{name:"Vitrine 2 — Bateaux de pêche portugais",img:"",text:"Collection de maquettes de bateaux de pêche portugais. Chaque région côtière a développé ses propres types.",tip:"Même activité (pêche), même bois, mais des formes différentes. L'Atlantique portugais n'est pas la mer d'Iroise.",funfact:"Les Portugais pêchaient la morue jusqu'en Terre-Neuve depuis le XVe siècle — 6 mois par an en mer, loin de tout !"},
+{name:"Collection bateaux de pêche français",img:"",text:"Modèles de bateaux de pêche de différentes régions françaises et européennes.",tip:"Jeu : deviner d'où vient le bateau en regardant sa silhouette. Méditerranéens vs atlantiques — visible à l'œil !",funfact:"Plus de 300 types de bateaux de pêche en France au XIXe siècle ! Presque tous disparus avec la standardisation."}
 ]},
 {id:5,color:"#D4537E",name:"Salle des gréements",subtitle:"Voiles, mâts et cordages du monde",
-intro:"Les voiles sont une façon de déterminer l'origine des bateaux. En Méditerranée : voiles triangulaires latines. Dans l'Atlantique, les équipages familiers des marées préfèrent les voiles au tiers. Cette diversité sur l'eau correspond à la variété des chantiers navals sur la côte.",
-tip:"Très visuelle, cette salle. Laisser d'abord les enfants se promener et regarder. Question : 'Qu'est-ce qui est différent entre ces bateaux ?' Ils vont trouver les voiles, les mâts, les formes. Ensuite expliquer pourquoi.",
-funfact:"Un grand voilier pouvait avoir plusieurs kilomètres de cordages ! Les marins devaient tous les connaître par leur nom et savoir les manier de nuit, par grand vent, sans lumière — par cœur uniquement.",
+intro:"Les voiles révèlent l'origine des bateaux. En Méditerranée : voiles triangulaires. Dans l'Atlantique : voiles au tiers, mieux adaptées aux marées et aux vents changeants.",
+tip:"Très visuelle, cette salle. Laisser explorer avant d'expliquer. Question : 'Qu'est-ce qui est différent entre ces bateaux ?' Ils vont trouver les voiles, les mâts, les formes.",
+funfact:"Un grand voilier : plusieurs kilomètres de cordages ! Les marins devaient tous les connaître par leur nom, de nuit, sans lumière.",
 img:I+"salle-des-greements.jpg?itok=m8nh-1Pd",
 items:[
-{name:"Voile carrée",img:"",
-text:"La voile carrée est la plus ancienne. Elle se gonfle avec le vent dans le dos (vent arrière) et permet de grandes vitesses. C'est la voile des Vikings, des navires de Christophe Colomb. Son principal défaut : elle remonte très mal au vent.",
-tip:"Mimer avec les bras : voile carrée = bras tendus sur les côtés, vent dans le dos. Voile triangulaire = bras pointés en avant. La différence de navigation est immédiate !",
-funfact:"Les Vikings ont traversé l'Atlantique avec des voiles carrées ! Leur longship pouvait faire 15 nœuds vent arrière. Ils ont atteint l'Amérique 500 ans avant Christophe Colomb."},
-{name:"Voiles aurique et à livarde",img:"",
-text:"Voiles adaptées à la navigation côtière et à la remontée au vent. Elles permettent de naviguer dans des directions variées, même presque face au vent. Typiques des bateaux atlantiques et bretons — indispensables là où le vent change souvent.",
-tip:"Expliquer la remontée au vent : un voilier ne peut pas aller directement face au vent, mais il zigzague en s'approchant — le 'louvoyage'. Les voiles auriques le font beaucoup mieux que les voiles carrées.",
-funfact:"Les pêcheurs bretons devaient rentrer au port quelle que soit la direction du vent. Ils ont donc développé des voiles très performantes à la remontée au vent — une nécessité vitale !"},
-{name:"Saint Lazare",img:"",
-text:"Exemple de bateau de pêche à voile de la tradition atlantique française. Son gréement illustre les techniques de voilure développées spécifiquement pour les côtes françaises.",
-tip:"Combien de voiles ? Comment sont-elles orientées ? Ce bateau était manœuvré par combien d'hommes ? Laisser les enfants estimer avant de répondre.",
-funfact:"Le saint patron des marins bretons est saint Yves (né en Bretagne au XIIIe siècle). Beaucoup de bateaux portaient le nom de saints pour s'attirer leur protection en mer !"},
-{name:"Marie Louise — cotre de Carantec",img:"",
-text:"Cotre de Carantec, type de bateau typique du nord-Finistère. Le cotre : un seul mât et plusieurs voiles, grande polyvalence. Pêchait principalement en baie de Morlaix et en Manche.",
-tip:"Carantec est un village côtier du nord-Finistère. Chaque village côtier breton avait son type de bateau ! La Marie Louise est l'ambassadrice de toute une tradition locale.",
-funfact:"La baie de Morlaix et la Manche ont des courants et marées parmi les plus forts d'Europe. Les bateaux locaux devaient être conçus pour ces conditions extrêmes — pas pour la Méditerranée !"},
-{name:"Bachot du lac de Grand-Lieu — 1960",img:"",
-text:"Bateau de pêche d'eau douce du lac de Grand-Lieu, en Loire-Atlantique — le plus grand lac naturel de France en hiver. Très plat, il navigue dans quelques centimètres d'eau. Ce type de bateau n'a pas changé depuis des siècles.",
-tip:"Même pays (France), même activité (pêche), milieu complètement différent (lac vs mer). Le bateau plat pour le lac, profond pour la mer — toujours la même logique d'adaptation.",
-funfact:"Le lac de Grand-Lieu est le séjour hivernal de milliers d'oiseaux migrateurs. Les pêcheurs côtoyaient hérons, canards, cormorans — un écosystème fragile qui existe encore grâce à la pêche traditionnelle !"},
-{name:"Viviane — 1860",img:"",
-text:"L'un des tout premiers bateaux de plaisance. Construite en 1860, elle représente la naissance du yachting en France. La bourgeoisie investissait dans des bateaux de plaisance et organisait des régates, embauchant des marins locaux pour les piloter.",
-tip:"Ici tout bascule : 1860, la Viviane, naissance de la plaisance à Douarnenez. Les mêmes marins qui pêchaient la sardine en semaine pilotaient les yachts bourgeois le weekend !",
-funfact:"Les Régates de Douarnenez, créées dans les années 1850, sont parmi les plus anciennes de France. Elles ont contribué à faire connaître Douarnenez comme haut lieu de la voile dans toute l'Europe."},
-{name:"Dolorès — une dorna galicienne",img:"",
-text:"Dorna, bateau de pêche traditionnel de Galice (Espagne). Utilisée pour la pêche côtière dans les Rías Gallegas. Sa forme est très proche des bateaux bretons — preuve que les techniques de construction navale se transmettaient le long des côtes atlantiques.",
-tip:"La Galice et la Bretagne partagent des traditions maritimes très proches : mêmes langues celtiques, traditions similaires, bateaux qui se ressemblent. Pas un hasard !",
-funfact:"La Galice et la Bretagne font partie du même arc celtique atlantique. Des contacts maritimes entre ces deux régions existent depuis l'âge du bronze — plus de 3000 ans d'échanges par la mer !"},
-{name:"Bleuette — 1938, dériveur",img:"",
-text:"Dériveur de 1938, conçu pour la navigation de loisir et la régate côtière. Ce type de petit voilier a contribué à démocratiser la voile en France.",
-tip:"1938 : la France vient d'obtenir les congés payés (1936). Pour la première fois, les ouvriers ont des vacances ! Des petits voiliers comme Bleuette permettaient aux familles de la classe moyenne de s'initier à la voile.",
-funfact:"Les congés payés de 1936 ont révolutionné les loisirs nautiques en France. Le nombre de bateaux de plaisance a explosé dans les années 1930-50. La voile n'était plus un sport de riches !"},
-{name:"Fi d'galarne — plate de Loire",img:"",
-text:"'Fi d'galarne' signifie 'fils du vent d'ouest'. Plate de Loire — bateau plat typique du fleuve. À fond plat pour naviguer dans les sections les plus basses. Transportait le vin d'Anjou, le tuffeau pour construire les châteaux, le sel de Guérande.",
-tip:"La Loire était l'autoroute de la France ! Avant le chemin de fer, les vins de Bordeaux et d'Anjou remontaient jusqu'à Paris par bateau. Plus rapide et moins cher que par route.",
-funfact:"Les châteaux de la Loire ont été construits en pierre de tuffeau extraite des falaises. Tout ce matériau a été transporté par bateau ! Sans les plates de Loire, pas de châteaux de la Loire."}
+{name:"Voile carrée",img:"",text:"La plus ancienne des voiles. Très efficace vent arrière. Voile des Vikings et de Christophe Colomb. Principal défaut : remonte mal au vent.",tip:"Mimer avec les bras : voile carrée = bras écartés, vent dans le dos. Voile triangulaire = bras pointés en avant.",funfact:"Les Vikings ont atteint l'Amérique 500 ans avant Christophe Colomb — avec des voiles carrées et leurs drakkar !"},
+{name:"Viviane — 1860",img:"",text:"L'un des tout premiers bateaux de plaisance. Construite en 1860, elle représente la naissance du yachting en France.",tip:"1860, la Viviane : bascule vers la plaisance. Les mêmes marins qui pêchaient la sardine pilotaient les yachts bourgeois !",funfact:"Les Régates de Douarnenez (années 1850) sont parmi les plus anciennes de France."},
+{name:"Dolorès — dorna galicienne",img:"",text:"Dorna de pêche côtière de Galice (Espagne). Forme très proche des bateaux bretons — preuve que les techniques se transmettaient le long des côtes atlantiques.",tip:"La Galice et la Bretagne : mêmes langues celtiques, traditions similaires, bateaux qui se ressemblent. Pas un hasard !",funfact:"Arc celtique atlantique : contacts maritimes entre Galice et Bretagne depuis l'âge du bronze — 3000 ans d'échanges !"},
+{name:"Bleuette — 1938, dériveur",img:"",text:"Dériveur de 1938 pour la régate côtière. A contribué à démocratiser la voile en France.",tip:"1938 : deux ans après les congés payés (1936). Pour la 1ère fois, des familles modestes pouvaient s'initier à la voile !",funfact:"Les congés payés de 1936 ont révolutionné les loisirs nautiques. La voile n'était plus un sport de riches."},
+{name:"Fi d'galarne — plate de Loire",img:"",text:"'Fils du vent d'ouest'. Plate de Loire à fond plat. Transportait tuffeau, vin d'Anjou, sel de Guérande.",tip:"La Loire : autoroute de la France avant le chemin de fer ! Les vins d'Anjou jusqu'à Paris par bateau.",funfact:"Les châteaux de la Loire sont construits en tuffeau transporté par ces plates. Sans elles, pas de châteaux de la Loire !"}
 ]},
-{id:6,color:"#0F6E56",name:"Les conserveries",subtitle:"Conditions de travail et grande grève de 1924",
-intro:"Les textes présentés ici viennent d'un rapport de la Jeunesse Ouvrière Chrétienne sur les conserveries sardinières de Douarnenez. Bâtiments insalubres, vestiaires inexistants, toilettes immondes, pas d'eau chaude, réfectoires insuffisants. Et pourtant, des milliers de femmes font tourner ces usines, debout 10 à 20 heures par jour dès l'âge de 8 ans.",
-tip:"Cette salle est l'une des plus importantes de la visite. Elle humanise l'histoire industrielle. Ne pas édulcorer pour les enfants : l'histoire vraie est plus forte que tout discours.",
-funfact:"En 1924, plus de 2000 ouvrières descendent dans la rue. Leur slogan : 'Penn Brel Aro !' — 'Tête dure maintenant !' en breton. Une des premières grandes grèves ouvrières de France.",
+{id:6,color:"#0F6E56",name:"Les conserveries",subtitle:"Conditions de travail et grève de 1924",
+intro:"Extraits du rapport de la Jeunesse Ouvrière Chrétienne sur les conserveries douarnenistes. Bâtiments insalubres, pas de vestiaires, WC immondes, eau froide. Des milliers de femmes travaillent debout 10 à 20h par jour dès l'âge de 8 ans.",
+tip:"Une des salles les plus importantes. Ne pas édulcorer pour les enfants : l'histoire vraie est plus forte que tout discours.",
+funfact:"Le 21 novembre 1924, plus de 2000 ouvrières défilent. 'Penn Brel Aro !' — 'Tête dure maintenant !' Une des premières grandes grèves ouvrières de France.",
 img:I+"entree-expo-conserverie-2.jpg?itok=YvEE3PKQ",
 items:[
-{name:"Conditions de travail dans les usines",img:"",
-text:"Bâtiments nettoyés tous les 4 ou 5 ans. Pas de vestiaires — vêtements accrochés n'importe où. WC sales, sans chasse d'eau, mixtes et rares. Lavabos : eau froide uniquement, pas de savon ni de serviette. Réfectoires insuffisants — certaines mangent sur leurs établis. À Chancerelle : 70 femmes mangent dans la salle de mise en boîte, seulement 2 fourneaux.",
-tip:"Lire à voix haute un extrait du rapport de la JOC. L'impact est immédiat. Ces mots ont été écrits par des enquêteurs catholiques dans les années 1920 — pas de la propagande, un constat factuel.",
-funfact:"À l'usine Chancerelle, les ouvrières réchauffaient leur repas sur les autoclaves de stérilisation — les mêmes machines qui cuisaient les boîtes de sardines ! Ingéniosité ou misère ? Les deux à la fois."},
-{name:"Les mains et les machines",img:"",
-text:"Entre l'arrivée du poisson et son départ en camions, une vingtaine de grandes étapes : étêtage à la main — cuisson dans l'huile bouillante — rinçage à l'écru — séchage — huilage — mise en boîte — sertissage (fermeture des boîtes) — autoclave (stérilisation) — bain de sciure pour dégraisser. Deux machines ont tout transformé : la sertisseuse et l'autoclave.",
-tip:"Mimer la chaîne avec le groupe : chaque enfant fait un geste de la chaîne. L'étêteur, la friteuse, la rinceur, la sécheuse, la huilleuse, la boucleuse... Toute la chaîne en 2 minutes !",
-funfact:"C'est Napoléon qui a tout déclenché ! En 1800, il lance un concours pour inventer un moyen de conserver la nourriture pour ses armées. Nicolas Appert gagne en 1810 en inventant la stérilisation. La boîte de conserve métallique suit immédiatement."},
-{name:"La grande grève des Penn Sardin en 1924",img:"",
-text:"Dans les années 1920, conditions très dures. Depuis l'âge de 8 ans, les ouvrières travaillent sans relâche, jusqu'à 20 heures par jour. Le 21 novembre 1924, plus de 2000 ouvrières descendent dans les rues. Le maire communiste Daniel Le Flanchec les soutient — et est suspendu. Le 1er janvier 1925, un attentat contre Le Flanchec. Après 46 jours de conflit : +1 franc/heure pour les femmes, +1,50 franc pour les hommes.",
-tip:"Cet épisode est fondateur pour Douarnenez. La ville est longtemps restée un bastion communiste à cause de cette histoire. Aujourd'hui encore, la mémoire des Penn Sardin est vive dans la ville.",
-funfact:"Le 1er janvier 1925, un patron tire sur le maire — une balle dans le cou ! Le maire survit mais perd l'usage de sa voix. L'attentat choque toute la France et force les patrons à négocier. La violence des patrons a finalement servi la cause des ouvrières."}
+{name:"Conditions de travail",img:"",text:"Bâtiments nettoyés tous les 4-5 ans. Pas de vestiaires. WC sales, mixtes, sans chasse d'eau. Eau froide, pas de savon ni serviette. Réfectoires insuffisants. Travail dès 8 ans, jusqu'à 20h/jour.",tip:"Lire à voix haute un extrait du rapport de la JOC. L'impact est immédiat. Ce sont des enquêteurs catholiques — pas de la propagande.",funfact:"À l'usine Chancerelle : 70 femmes mangeaient dans la salle de mise en boîte avec seulement 2 fourneaux. Certaines réchauffaient leur repas sur les autoclaves !"},
+{name:"La chaîne de fabrication",img:"",text:"20 étapes : étêtage à la main — cuisson dans l'huile bouillante — rinçage — séchage — huilage — mise en boîte — sertissage — autoclave (stérilisation) — bain de sciure.",tip:"Mimer la chaîne avec le groupe : chaque enfant fait un geste. Toute la chaîne en 2 minutes !",funfact:"C'est Napoléon qui a tout déclenché ! Concours de 1800, gagné par Nicolas Appert en 1810. La boîte de conserve métallique naît dans la foulée."},
+{name:"La grande grève de 1924",img:"",text:"Conditions très dures depuis l'âge de 8 ans, jusqu'à 20h/jour. 21 novembre 1924 : plus de 2000 ouvrières dans les rues. Maire communiste Le Flanchec soutient les grévistes. 1er janvier 1925 : attentat (balle dans le cou !). Après 46 jours : +1 franc/heure.",tip:"Cet épisode est fondateur. Douarnenez longtemps bastion communiste à cause de cette histoire. La mémoire des Penn Sardin est encore vive.",funfact:"L'attentat du 1er janvier 1925 a choqué toute la France et forcé les patrons à négocier. La violence des patrons a finalement servi la cause des ouvrières."}
 ]},
 {id:7,color:"#185FA5",name:"Les ports-abris",subtitle:"Pêche aux crustacés et vie du Cap Sizun",
-intro:"Ici a été reconstituée une scène de port-abri typique du Cap Sizun dans les années 1920. Un abri naturel, souvent dans une crique, équipé de jetées ou de cales inclinées. Quand la protection devient insuffisante, les bateaux sont mis hors de portée de la mer grâce à un cabestan actionné à la manivelle.",
-tip:"Cette reconstitution grandeur nature est très efficace avec les enfants. Leur faire pointer : où est la mer ? Où sont les bateaux ? Qui travaille ? Que font-ils exactement ? Les laisser explorer avant d'expliquer.",
-funfact:"Le Scaur Weather pèse 534 tonnes — soit environ 500 voitures ! Et pourtant il flotte. Principe d'Archimède : ce qui compte c'est le volume d'eau déplacé, pas le poids brut.",
+intro:"Reconstitution d'un port-abri typique du Cap Sizun dans les années 1920. Abri naturel dans une crique, équipé de cales inclinées. Un cabestan à manivelle hisse les bateaux hors de portée des vagues.",
+tip:"Très efficace avec les enfants. Pointer : où est la mer ? Où sont les bateaux ? Que font ces personnes ? Les laisser explorer avant d'expliquer.",
+funfact:"Le Scaur Weather pèse 534 tonnes — 500 voitures ! Et pourtant il flotte. Principe d'Archimède : c'est le volume déplacé qui compte, pas le poids brut.",
 img:I+"port-abri_0.jpg?itok=MbilJhLH",
 items:[
-{name:"Casiers à homards cylindriques",img:"",
-text:"Posés sur le fond marin pour piéger homards et crabes. L'animal rentre attiré par l'appât mais ne peut plus sortir — l'entrée est conçue en entonnoir inversé. Ces casiers sont encore utilisés aujourd'hui, presque identiques à ceux du XIXe siècle.",
-tip:"Faire mimer l'effet entonnoir : entrer est facile, sortir est impossible. Un piège simple et efficace, inventé il y a des siècles, toujours inchangé.",
-funfact:"La pêche au casier est l'une des pêches les plus sélectives : on ne prend que les homards qui rentrent dans le casier. Pas de prises accidentelles. Les pêcheurs l'ont inventée bien avant qu'on parle de 'pêche durable' !"},
-{name:"Casiers à homards semi-circulaires",img:"",
-text:"Variante des casiers cylindriques pour zones rocheuses spécifiques. Leur forme aplatie leur permet de s'installer là où les casiers ronds ne peuvent pas tenir. Chaque type de fond marin a son casier adapté.",
-tip:"Comparer les deux types côte à côte : même but, formes différentes adaptées à des fonds différents. L'ingéniosité des pêcheurs locaux.",
-funfact:"Un pêcheur professionnel peut poser jusqu'à 300 casiers ! Il doit se souvenir de l'emplacement exact de chacun. Avant les GPS, il repérait ses casiers avec des bouées et... les clochers !"},
-{name:"Canot de pêche aux crustacés",img:"",
-text:"Petit canot conçu pour la pêche aux crustacés dans les zones rocheuses côtières. Maniable et stable, il peut s'approcher des rochers sans risque. Parfaitement adapté aux côtes déchiquetées du Cap Sizun.",
-tip:"Le Cap Sizun (pointe de la Bretagne) : vents forts, courants, rochers — tout est hostile. Les bateaux et techniques de pêche sont une réponse directe à cet environnement difficile.",
-funfact:"La côte du Cap Sizun est tellement dangereuse qu'elle a donné naissance à une expression : 'La pointe du Raz, si tu la passes, tu l'auras !' Les naufrages y étaient fréquents."},
-{name:"Le vivier en bois",img:"",
-text:"Réservoir d'eau de mer perforé dans lequel homards et crabes vivants sont conservés avant la vente. Permet de garder les crustacés en vie pendant plusieurs jours. Le prix est bien meilleur pour les crustacés vivants.",
-tip:"Pourquoi garder les crustacés vivants ? Parce qu'ils se détériorent très vite après la mort. Un homard vivant vaut 3 fois plus qu'un homard mort. Le vivier, c'est la banque du pêcheur !",
-funfact:"Les premiers viviers flottants bretons étaient de simples caisses percées accrochées au bord du bateau. Aujourd'hui, certains viviers industriels contiennent des milliers de homards en attente d'être expédiés en Europe."},
-{name:"L'ancre",img:"",
-text:"L'objet maritime universel par excellence. Jetée par-dessus bord, elle se plante dans le fond marin et retient le bateau. Des dizaines de types selon le fond (sable, roche, vase) et la taille du bateau. L'ancre est aussi le symbole universel de la marine et de l'espoir.",
-tip:"L'ancre comme symbole d'espoir : une ancre bien posée signifie qu'on ne dérivera pas, qu'on est en sécurité. Dans les tempêtes, 'mouiller l'ancre' sauvait des vies.",
-funfact:"Les plus grandes ancres du monde pèsent plusieurs tonnes. Le porte-avions Charles de Gaulle utilise des ancres de 15 tonnes. Et pourtant le principe est identique depuis l'Antiquité !"},
-{name:"La cabane de pêcheur",img:"",
-text:"Sur les côtes bretonnes, chaque pêcheur avait sa cabane au bord de l'eau pour stocker le matériel, réparer les filets, et se retrouver entre pêcheurs. Ces cabanes sont encore présentes sur beaucoup de côtes bretonnes.",
-tip:"Ces cabanes survivent encore en Bretagne. Certains enfants du groupe en ont peut-être une dans leur famille ! C'est un patrimoine vivant, pas museifié.",
-funfact:"Les cabanes de pêcheurs bretons sont aujourd'hui des objets patrimoniaux très recherchés. Autrefois utilitaires et méprisées, elles sont maintenant symboles de l'authenticité bretonne !"},
-{name:"Les marques",img:"",
-text:"Avant les GPS et les cartes précises, les pêcheurs se repéraient en prenant des 'alignements' : deux points à terre dans l'axe l'un de l'autre donnaient une ligne de position. Deux alignements croisés donnaient une position précise. Ce savoir s'appelait 'les marques' — transmis oralement de père en fils.",
-tip:"Faire l'exercice depuis le musée : quels points fixes peut-on aligner ? C'est exactement ce que faisaient les pêcheurs il y a 100 ans — et il y a 1000 ans !",
-funfact:"Les marques des pêcheurs douarnenistes n'ont jamais été écrites — uniquement dans les têtes, transmises oralement. Beaucoup de ces savoirs ont disparu avec les derniers marins qui les connaissaient. Une perte culturelle irréparable."}
+{name:"Casiers à homards",img:"",text:"Posés sur le fond, l'animal rentre attiré par l'appât mais ne peut plus sortir — entrée en entonnoir inversé. Encore utilisés aujourd'hui, presque identiques à ceux du XIXe siècle.",tip:"Faire mimer l'effet entonnoir : entrer est facile, sortir impossible. Simple, efficace, inventé il y a des siècles.",funfact:"La pêche au casier est très sélective — pas de prises accidentelles. Les pêcheurs ont inventé la pêche durable avant qu'on en parle !"},
+{name:"Canot de pêche aux crustacés",img:"",text:"Petit canot maniable pour les zones rocheuses côtières. Parfaitement adapté aux côtes déchiquetées du Cap Sizun.",tip:"Le Cap Sizun : vents forts, courants, rochers. Les bateaux sont une réponse directe à cet environnement hostile.",funfact:"'La pointe du Raz, si tu la passes, tu l'auras !' — avertissement sérieux sur la dangerosité de cette côte."},
+{name:"Le vivier en bois",img:"",text:"Réservoir d'eau de mer perforé pour garder homards et crabes vivants. Plusieurs jours de conservation possible.",tip:"Un homard vivant vaut 3 fois plus qu'un mort. Le vivier, c'est la banque du pêcheur !",funfact:"Les premiers viviers étaient de simples caisses percées accrochées au bord du bateau. Aujourd'hui : milliers de homards dans des viviers industriels."},
+{name:"Les marques",img:"",text:"Alignements visuels de points à terre pour se repérer en mer. Jamais écrits — transmis oralement de père en fils.",tip:"Exercice depuis le musée : quels points fixes peut-on aligner ? C'est exactement ce que faisaient les pêcheurs !",funfact:"Ces savoirs n'ont jamais été écrits. Beaucoup ont disparu avec les derniers marins qui les connaissaient. Une perte culturelle irréparable."}
 ]},
 {id:8,color:"#888780",name:"L'abri — Humanité, canot à misaine",subtitle:"Solidarité et dernier bateau de travail",
-intro:"À bord des bateaux, en attendant de lever les filets, les hommes cherchaient à s'abriter du vent et du froid. Cet abri de fortune — une sorte de tente faite de voiles tendues — s'appelle le 'cabanage'. L'inclinaison vers l'avant assure l'écoulement de l'eau de pluie et protège du courant d'air.",
-tip:"Dernière salle de la visite. Prendre le temps de faire une conclusion avec le groupe : qu'est-ce qu'on a appris ? Qu'est-ce qui vous a le plus surpris ? Quel bateau avez-vous préféré ?",
-funfact:"La Place de l'Enfer — le quartier juste à côté du musée — vient d'une déformation de l'ancien breton, pas d'un lieu maudit ! Un des nombreux exemples de noms bretons mal traduits au fil des siècles.",
-img:"",
+intro:"Le 'cabanage' : abri improvisé fait de voiles tendues sur des rames. Protège du vent, de la pluie et du courant d'air pendant les longues heures d'attente entre la pose et le relevage des filets.",
+tip:"Dernière salle. Prendre le temps d'une conclusion : qu'est-ce qu'on a appris ? Qu'est-ce qui vous a le plus surpris ? Quel bateau préféré ?",
+funfact:"La Place de l'Enfer, juste à côté du musée, vient d'une déformation du breton — pas d'un lieu maudit ! Un des nombreux faux-amis toponymiques bretons.",img:"",
 items:[
-{name:"L'Humanité — canot à misaine 1936",img:"",
-text:"Ce type de bateau s'appelle 'canot à misaine'. L'Humanité a été construite par le chantier Le Gall à Pont-l'Abbé en 1936. Elle n'a qu'une voile à l'avant : la misaine. Ce bateau remplace les grandes chaloupes, trop coûteuses en main-d'œuvre lors des graves crises sardinières. Plus petit, moins cher, moins d'équipage.",
-tip:"L'Humanité est le dernier bateau de travail de la visite. Elle symbolise l'adaptation : quand la crise arrive, on invente un bateau plus petit, moins cher. L'histoire de la survie.",
-funfact:"Nommer un bateau 'l'Humanité' en 1936 c'est un engagement politique : la France est sous le Front Populaire, l'esprit de solidarité est fort. Les chantiers de Pont-l'Abbé étaient proches des idées socialistes."},
-{name:"Le cabanage",img:"",
-text:"Le 'cabanage' est l'art d'improviser un abri à bord. En tendant une voile sur des piquets ou des rames, les marins créaient une tente qui les protégeait du vent et de la pluie pendant les heures d'attente entre la pose et le relevage des filets. Simple, efficace, démontable en quelques secondes.",
-tip:"Faire mimer aux enfants comment on improvise une tente avec une bâche et des bâtons — c'est exactement ça le cabanage ! En camping, en plein air... le même principe depuis des millénaires.",
-funfact:"Les marins bretons passaient parfois 12 à 18 heures en mer sur une seule sortie de pêche. Le cabanage permettait de dormir un peu, de manger à l'abri. Une invention simple qui a sauvé des vies par mauvais temps."}
+{name:"L'Humanité — canot à misaine 1936",img:"",text:"Construit par le chantier Le Gall à Pont-l'Abbé en 1936. Une seule voile à l'avant : la misaine. Remplace les grandes chaloupes trop coûteuses lors des crises sardinières.",tip:"L'Humanité : symbole d'adaptation. Face à la crise, on invente un bateau plus petit et moins cher.",funfact:"Nommer un bateau 'l'Humanité' en 1936 : un engagement politique. Front Populaire, congés payés, chantiers proches des idées socialistes."},
+{name:"Le cabanage",img:"",text:"Voiles tendues sur des piquets ou des rames pour former une tente à bord. Protège du vent et de la pluie pendant les heures d'attente. Simple, efficace, démontable en quelques secondes.",tip:"Faire mimer avec une bâche et des bâtons : c'est exactement ça, le cabanage ! Même principe depuis des millénaires.",funfact:"Les marins passaient parfois 12 à 18 heures en mer sur une sortie. Le cabanage permettait de dormir et de manger à l'abri."}
 ]}
 ];
 
+/* ─────────────────────────────────────────
+   QUIZ DATA
+───────────────────────────────────────── */
+const quizData={
+0:{c1:[
+{t:"Comment s'appelle le jeune garçon sur les bateaux de pêche ?",opts:["Le capitaine","Le mousse","Le marin"],ans:1,exp:"Le mousse avait environ 12 ans — le plus jeune de l'équipage, il apprenait le métier de marin."},
+{t:"De quelle couleur étaient les voiles des chaloupes de Douarnenez ?",opts:["Blanches","Rouges","Presque noires"],ans:2,exp:"À Douarnenez, on appliquait une double dose de produit protecteur, ce qui rendait les voiles presque noires !"},
+{t:"Le filet de pêche à la sardine est de quelle couleur ?",opts:["Rouge","Bleu","Jaune"],ans:1,exp:"Le filet est bleu — un produit spécial lui donne cette couleur qui se fond dans l'eau."},
+{t:"Combien mesure la chaloupe sardinière ?",opts:["5 mètres","10 mètres","20 mètres"],ans:1,exp:"La chaloupe fait 10 mètres — environ la longueur d'un bus scolaire."},
+{t:"Les Romains faisaient déjà du poisson conservé à Douarnenez.",opts:["Vrai","Faux"],ans:0,exp:"Les Romains produisaient du Garum (sauce de poisson) à Plomarc'h, au IIe siècle ! On peut encore voir les citernes."}
+],c2:[
+{t:"En quelle année Douarnenez était-il le premier port sardinier de Bretagne ?",opts:["1824","1924","2024"],ans:1,exp:"En 1924, Douarnenez comptait le plus grand nombre de marins inscrits de France."},
+{t:"Combien de bateaux les chantiers fabriquaient-ils par an vers 1900 ?",opts:["14","140","1400"],ans:1,exp:"140 chaloupes par an, toutes identiques, construites sur le même gabarit !"},
+{t:"Le Garum était une sauce produite à Douarnenez par les Romains.",opts:["Vrai","Faux"],ans:0,exp:"Les Romains produisaient le Garum (sauce de poisson fermenté) à Plomarc'h au IIe siècle."},
+{t:"Le filet à sardines mesurait 30 mètres de long.",opts:["Vrai","Faux"],ans:0,exp:"30 mètres × 10 mètres — la longueur de 3 bus ! On les attachait jusqu'à 7 km."},
+{t:"Comment s'appelle l'abri fait de voiles tendues à bord ?",opts:["Le cabanage","Le mouillage","Le tannage"],ans:0,exp:"Le cabanage : voiles tendues sur des rames formant une tente qui protège du vent et de la pluie."}
+],c3:[
+{t:"Quel produit rendait les voiles douarnenistes presque noires ?",opts:["Du goudron de houille","Du caoutchouc d'acacia indien","De l'huile de sardine"],ans:1,exp:"Du caoutchouc d'acacia indien dilué dans de l'eau très chaude. Remplacé après la 1ère Guerre Mondiale par de l'ocre."},
+{t:"Les sardines ont rétréci en un siècle à cause de la surpêche uniquement.",opts:["Vrai","Faux"],ans:1,exp:"Non, c'est l'acidification des océans. Les sardines sont passées de 17-20 cm à 8 cm en moyenne."},
+{t:"Quel condiment romain était fabriqué à Plomarc'h ?",opts:["Le miel","Le Garum","Le sel"],ans:1,exp:"Le Garum, sauce de poisson fermenté — un des condiments les plus coûteux de l'Empire romain. Des amphores ont été retrouvées jusqu'à Rome !"},
+{t:"L'épave de Kervigen est la seule chaloupe sardinière authentique conservée au monde.",opts:["Vrai","Faux"],ans:0,exp:"Découverte en 1984, datant de 1910-1915. Sans elle, la tradition de construction aurait disparu sans trace matérielle."},
+{t:"Pourquoi les komizerez étaient-elles toutes des femmes âgées ?",opts:["C'était obligatoire par la loi","Ce sont d'anciennes ouvrières, expertes du poisson, jugées trop vieilles pour l'usine","Les hommes refusaient ce travail"],ans:1,exp:"Les komizerez avaient un vrai pouvoir économique malgré leur statut précaire. Expertes du poisson, elles faisaient ou défaisaient la journée d'un patron."}
+]},
+1:{c1:[
+{t:"Le coracle peut se porter sur le dos comme un sac.",opts:["Vrai","Faux"],ans:0,exp:"Oui ! Le coracle est si léger qu'on peut le porter sur son dos. C'est sa propre valise !"},
+{t:"Le bateau-panier du Vietnam est imperméabilisé avec...",opts:["De la peinture","De la bouse de buffle","Du plastique"],ans:1,exp:"De la bouse de buffle ! Une technique 100% naturelle, inventée il y a des millénaires, encore utilisée aujourd'hui."},
+{t:"La pirogue à balancier peut chavirer facilement.",opts:["Vrai","Faux"],ans:1,exp:"Non ! Le balancier latéral sert de contrepoids et empêche le bateau de chavirer."},
+{t:"Ces bateaux primitifs ne sont plus utilisés aujourd'hui.",opts:["Vrai","Faux"],ans:1,exp:"Faux ! Le bateau-panier vietnamien, le coracle gallois... encore fabriqués et utilisés exactement comme il y a 2000 ans."},
+{t:"Comment s'appelle un bateau fait d'un seul tronc d'arbre creusé ?",opts:["Un catamaran","Une pirogue monoxyle","Un curragh"],ans:1,exp:"Monoxyle = un seul bois. Une pirogue taillée dans un seul tronc d'arbre creusé."}
+],c2:[
+{t:"Des moines irlandais auraient traversé l'Atlantique en curragh au VIe siècle.",opts:["Vrai","Faux"],ans:0,exp:"En 1976, Tim Severin a refait ce voyage pour le prouver — et il a réussi ! Bien avant Christophe Colomb."},
+{t:"Quelle est la capacité de charge d'un curragh irlandais ?",opts:["200 kg","1 tonne","2 tonnes"],ans:2,exp:"Jusqu'à 2 tonnes dans une embarcation légère en toile ! La flexibilité absorbe les chocs."},
+{t:"Le Tatara de Taïwan est décoré avec des figures représentant le héros légendaire Magomaog.",opts:["Vrai","Faux"],ans:0,exp:"Magomaog est le héros légendaire qui aurait enseigné la construction navale aux Yamei."},
+{t:"Ces bateaux primitifs ont été inventés indépendamment sur tous les continents.",opts:["Vrai","Faux"],ans:0,exp:"C'est ce qui les rend 'universels' : les mêmes solutions ont été trouvées partout dans le monde sans contact entre ces civilisations."},
+{t:"Quelle civilisation a utilisé la pirogue à balancier pour peupler l'océan Pacifique ?",opts:["Les Romains","Les Polynésiens","Les Vikings"],ans:1,exp:"Il y a 3000 ans, les Polynésiens ont peuplé tout le Pacifique grâce aux pirogues à balancier — la plus grande migration maritime de l'histoire !"}
+],c3:[
+{t:"Des moines irlandais auraient atteint l'Amérique avant les Vikings.",opts:["Vrai","Faux"],ans:0,exp:"Des moines irlandais du VIe siècle, en curragh, auraient précédé les Vikings (Xe s.) et Christophe Colomb (1492). Tim Severin l'a prouvé en 1976."},
+{t:"Le kapok utilisé pour imperméabiliser le Tatara est une fibre végétale.",opts:["Vrai","Faux"],ans:0,exp:"Le kapok est une fibre végétale issue du kapokier. Légère et hydrophobe, elle était aussi utilisée pour rembourrer les gilets de sauvetage !"},
+{t:"La pirogue à balancier a permis la plus grande migration maritime de l'histoire.",opts:["Vrai","Faux"],ans:0,exp:"Il y a 3000 ans, les Polynésiens ont peuplé tout le Pacifique — des milliers de km sans boussole ni carte !"},
+{t:"Certaines pirogues monoxyles retrouvées en Europe ont plus de 8000 ans.",opts:["Vrai","Faux"],ans:0,exp:"Plus vieilles que les pyramides d'Égypte ! Parfaitement conservées dans des tourbières irlandaises et néerlandaises."},
+{t:"La technique du bateau-panier vietnamien ressemble à la vannerie.",opts:["Vrai","Faux"],ans:0,exp:"On creuse un trou, on y descend un tissu de lattes tressées, des pierres maintiennent la forme. Exactement comme la vannerie — technique inchangée depuis 2000 ans."}
+]},
+2:{c1:[
+{t:"Comment s'appelle la 'maison de pilotage' d'un bateau motorisé ?",opts:["La cabine","La timonerie","Le pont"],ans:1,exp:"La timonerie : un endroit fermé et abrité pour piloter le bateau. Avant, le capitaine était exposé à toutes les intempéries !"},
+{t:"Le moteur a été tout de suite accepté par les pêcheurs.",opts:["Vrai","Faux"],ans:1,exp:"Non ! Les pêcheurs pensaient que le bruit du moteur ferait fuir le poisson. Il a fallu des années pour les convaincre."},
+{t:"La machine à vapeur fonctionne grâce à...",opts:["L'essence","L'eau chauffée en vapeur","Le vent"],ans:1,exp:"L'eau est chauffée dans une chaudière, produit de la vapeur, qui pousse des pistons — comme une cocotte-minute géante !"},
+{t:"En 1923, il y avait des centaines de bateaux motorisés en Bretagne.",opts:["Vrai","Faux"],ans:1,exp:"Seulement 4 bateaux motorisés en Bretagne en 1923 ! En 1940, toute la flotte était motorisée."},
+{t:"La pompe à essence du port de Rosmeur était montée sur roues pour...",opts:["Être vendue dans la ville","Atteindre les bateaux partout sur le quai","Être déplacée la nuit"],ans:1,exp:"La pompe se déplaçait jusqu'aux bateaux amarrés n'importe où sur le quai — le carburant venait au bateau !"}
+],c2:[
+{t:"En quelle année seulement 4 bateaux étaient motorisés en Bretagne ?",opts:["1903","1923","1943"],ans:1,exp:"En 1923, seulement 4 bateaux motorisés en Bretagne. En 1940, toute la flotte l'était !"},
+{t:"Le moteur diesel ne nécessite pas de chauffe préalable.",opts:["Vrai","Faux"],ans:0,exp:"Exactement ! Le diesel est bien plus simple que la vapeur. Plus de chaudière à allumer des heures avant le départ."},
+{t:"Combien de chevaux développe le moteur du chalutier Katie-Ann ?",opts:["15","52","152"],ans:2,exp:"152 chevaux, 18 cylindres, diesel 4 temps. Comme une petite voiture — mais pour un chalutier entier en pleine mer !"},
+{t:"Le chalutier Saint Quido allait pêcher jusqu'aux Açores.",opts:["Vrai","Faux"],ans:0,exp:"Le Saint Quido sillonnait du golfe de Gascogne aux Açores pour pêcher le thon. Des campagnes de 18 jours à 1 mois !"},
+{t:"Le passage de la vapeur au diesel a divisé par combien le poids du combustible ?",opts:["Par 2","Par 5","Par 10"],ans:2,exp:"Le diesel a divisé par 10 le poids du combustible à embarquer par rapport au charbon. Une révolution pratique !"}
+],c3:[
+{t:"Pourquoi la machine à vapeur n'était-elle pas adaptée aux petits bateaux de pêche ?",opts:["Elle était trop bruyante","Elle était trop grosse et lourde","Elle consommait trop d'huile"],ans:1,exp:"La machine à vapeur nécessitait une chaudière volumineuse et du charbon en grande quantité. Beaucoup trop encombrant pour une chaloupe de 10 mètres."},
+{t:"Le canal de Manchester, sur lequel opérait le Reliant, mesure 58 km.",opts:["Vrai","Faux"],ans:0,exp:"Creusé entre 1887 et 1894 pour que les navires atteignent Manchester directement. Les remorqueurs y travaillaient 24h/24."},
+{t:"Quel était le principal avantage du diesel sur la vapeur ?",opts:["Il était moins cher à l'achat","Il n'exigeait pas de chauffe préalable et consommait bien moins","Il était plus rapide"],ans:1,exp:"Le diesel ne demande pas d'allumer une chaudière des heures avant le départ. Et le carburant est bien plus léger que le charbon — divisé par 10 en poids."},
+{t:"La passerelle du Saint Quido permettait d'accéder à la salle des machines via des trappes.",opts:["Vrai","Faux"],ans:0,exp:"Deux trappes dans le sol donnaient accès à la salle des machines et aux cabines. Sur un bateau, chaque centimètre carré est optimisé !"},
+{t:"Le Katie-Ann était à l'origine propulsé à la voile avant d'être motorisé.",opts:["Vrai","Faux"],ans:0,exp:"Le Katie-Ann a d'abord été équipé à la voile puis reconverti au moteur diesel. Cette reconversion était fréquente."}
+]},
+3:{c1:[
+{t:"Qu'est-ce qu'un yacht ?",opts:["Un bateau de pêche","Un bateau de plaisance et de sport","Un bateau militaire"],ans:1,exp:"Un yacht est un bateau de plaisance, apparu au XIXe siècle pour le sport et le loisir."},
+{t:"La Viviane est l'un des premiers bateaux de plaisance de France.",opts:["Vrai","Faux"],ans:0,exp:"Construite en 1860, la Viviane est l'un des tout premiers bateaux de plaisance français !"},
+{t:"Qu'est-ce qu'un caboteur ?",opts:["Un bateau de guerre","Un bateau qui transporte des marchandises de port en port","Un bateau de pêche"],ans:1,exp:"Le caboteur transportait marchandises et personnes entre les ports côtiers — le 'camion de la mer' !"},
+{t:"Les mêmes marins pouvaient pêcher en semaine et piloter des yachts le week-end.",opts:["Vrai","Faux"],ans:0,exp:"La bourgeoisie embauchait les marins locaux pour piloter leurs yachts. Les mêmes hommes qui pêchaient la sardine en semaine !"},
+{t:"Le mot 'yacht' vient de quelle langue ?",opts:["Du breton","Du néerlandais","De l'anglais"],ans:1,exp:"'Yacht' vient du néerlandais 'jacht' qui signifiait 'bateau de chasse' !"}
+],c2:[
+{t:"Les premières régates de Douarnenez datent des années...",opts:["1750","1850","1950"],ans:1,exp:"Les années 1850 ! Bien avant les Jeux Olympiques modernes (1896). Douarnenez était déjà un haut lieu de la voile."},
+{t:"La Catraïa est un bateau typiquement breton.",opts:["Vrai","Faux"],ans:1,exp:"Non, la Catraïa est un bateau méditerranéen qu'on retrouve du Portugal au Maroc. Un design universel !"},
+{t:"'Ar Spinec' signifie en breton...",opts:["Le requin","L'épine","La vague"],ans:1,exp:"'Ar Spinec' signifie 'l'épine' en breton. Un bateau robuste pour les côtes déchiquetées de l'Atlantique."},
+{t:"Les congés payés de 1936 ont contribué à démocratiser la voile en France.",opts:["Vrai","Faux"],ans:0,exp:"Pour la première fois, les ouvriers avaient des vacances. Des petits voiliers permettaient aux familles modestes de s'initier à la voile."},
+{t:"Qu'est-ce qui différencie un bateau de plaisance d'un bateau de pêche ?",opts:["La couleur","L'usage : loisir vs travail","La taille"],ans:1,exp:"L'usage est la différence fondamentale. Plaisance = légèreté et vitesse. Pêche = robustesse et grande capacité de stockage."}
+],c3:[
+{t:"La Viviane (1860) représente la naissance de la voile de plaisance à Douarnenez.",opts:["Vrai","Faux"],ans:0,exp:"La bourgeoisie investissait dans des bateaux de plaisance et organisait des régates en embauchant des marins locaux."},
+{t:"En France au XIXe siècle, il existait plus de 300 types de bateaux de pêche différents.",opts:["Vrai","Faux"],ans:0,exp:"Chaque port, chaque village côtier avait le sien. Cette extraordinaire diversité a presque entièrement disparu au XXe siècle."},
+{t:"Le tjotter hollandais est adapté aux eaux peu profondes grâce à...",opts:["Sa forme plate","Sa dérive pivotante","Ses deux coques"],ans:1,exp:"La dérive pivotante s'escamote pour les eaux très peu profondes (canaux, polders). Innovation typiquement néerlandaise."},
+{t:"Les mêmes marins pêchaient la sardine en semaine et pilotaient des yachts le week-end.",opts:["Vrai","Faux"],ans:0,exp:"La bourgeoisie embauchait les marins locaux. Les mêmes eaux, les mêmes hommes, mais deux classes sociales totalement différentes."},
+{t:"'Fi d'galarne' signifie...",opts:["Fils du vent d'ouest","Fille de la Loire","Fond plat et galant"],ans:0,exp:"'Fils du vent d'ouest' en langue locale. Ces plates transportaient le tuffeau pour construire les châteaux de la Loire !"}
+]},
+4:{c1:[
+{t:"Comment les marins se repéraient-ils en mer avant le GPS ?",opts:["Avec une boussole uniquement","En alignant des clochers et des points sur la côte","En regardant les étoiles uniquement"],ans:1,exp:"Les marins 'naviguaient aux clochers' en alignant des points à terre. Un savoir transmis oralement !"},
+{t:"Le caboteur transportait des marchandises entre les villes par la mer.",opts:["Vrai","Faux"],ans:0,exp:"C'est la définition du cabotage ! De port en port le long de la côte."},
+{t:"Comment s'appelle un marin qui transporte des marchandises de port en port ?",opts:["Un corsaire","Un caboteur","Un thonier"],ans:1,exp:"Un caboteur ! Il pratique le 'cabotage' — navigation côtière toujours en vue des côtes."},
+{t:"Les marins bretons écrivaient leurs 'marques' dans des cahiers.",opts:["Vrai","Faux"],ans:1,exp:"Non ! Les marques n'ont jamais été écrites. Elles existaient uniquement dans les têtes et se transmettaient oralement."},
+{t:"Le caboteur était aussi appelé...",opts:["Le camion de la mer","Le train de la mer","L'avion de la mer"],ans:0,exp:"Le 'camion de la mer' ! Avant le chemin de fer, tous les transports de marchandises côtiers se faisaient par cabotage."}
+],c2:[
+{t:"Deux points à terre alignés depuis la mer forment ce qu'on appelle...",opts:["Une marque","Un alignement","Un cap"],ans:1,exp:"Un alignement ! Deux alignements croisés donnent une position précise — sans instrument, juste avec les yeux et la mémoire."},
+{t:"Le chemin de fer est arrivé à Brest en 1865, remplaçant progressivement le cabotage.",opts:["Vrai","Faux"],ans:0,exp:"Avant 1865, presque toutes les marchandises de Bretagne voyageaient par mer. Le chemin de fer a progressivement concurrencé le cabotage."},
+{t:"Les caboteurs pouvaient naviguer dans des anses très peu profondes.",opts:["Vrai","Faux"],ans:0,exp:"C'est leur grand avantage ! Surnommés 'écraseurs de crabes', ils mouillaient dans des endroits minuscules où les grands navires ne pouvaient pas entrer."},
+{t:"Les 'marques' des pêcheurs bretons ont été transcrites dans des livres.",opts:["Vrai","Faux"],ans:1,exp:"Non, jamais écrit. Uniquement dans les têtes. Beaucoup ont disparu avec les derniers marins qui les connaissaient."},
+{t:"Le Portugal était aussi un grand pays de cabotage et de pêche hauturière.",opts:["Vrai","Faux"],ans:0,exp:"Les Portugais pêchaient la morue jusqu'en Terre-Neuve depuis le XVe siècle — 6 mois par an en mer !"}
+],c3:[
+{t:"Pourquoi les savoirs 'aux clochers' ont-ils largement disparu ?",opts:["Parce qu'ils ont été interdits","Parce qu'ils n'ont jamais été écrits et les porteurs sont morts","Parce qu'ils ont été remplacés par des livres"],ans:1,exp:"Transmis oralement de père en fils, ces savoirs n'existaient que dans les mémoires. Avec le GPS, la nécessité a disparu. Une perte culturelle irréparable."},
+{t:"Le cabotage était plus rapide que la diligence pour relier Lorient à Brest.",opts:["Vrai","Faux"],ans:0,exp:"Paris-Brest en diligence : 5 jours. Lorient-Brest en caboteur : quelques heures par vent favorable !"},
+{t:"La criée de Guilvinec est aujourd'hui la plus importante de Bretagne.",opts:["Vrai","Faux"],ans:0,exp:"Oui, avec des centaines de tonnes de poisson traitées par jour et un système électronique en temps réel."},
+{t:"Qu'est-ce qui a principalement remplacé le cabotage au XXe siècle ?",opts:["Les avions","Le chemin de fer et les camions","Les pipelines"],ans:1,exp:"D'abord le chemin de fer (XIXe s.), puis les camions (XXe s.). Le cabotage subsiste encore pour certains transports de vrac."},
+{t:"La criée de Douarnenez a été transformée en quoi en 1919 ?",opts:["Un musée","Une usine à glace","Un entrepôt à sel"],ans:1,exp:"En 1919, transformée en espace de fabrication de glace pour conserver le poisson à bord des bateaux. Une révolution pour la conservation du poisson frais !"}
+]},
+5:{c1:[
+{t:"Comment s'appelle l'ensemble des voiles et cordages d'un bateau ?",opts:["Le moteur","Le gréement","La coque"],ans:1,exp:"Le gréement, c'est tout ce qui permet au bateau d'avancer avec le vent : voiles, mâts, cordages, poulies..."},
+{t:"La voile carrée est la plus ancienne des voiles.",opts:["Vrai","Faux"],ans:0,exp:"La voile carrée est la plus ancienne — celle des Vikings et des navires de Christophe Colomb."},
+{t:"La Viviane (1860) est un bateau...",opts:["De pêche","De guerre","De plaisance"],ans:2,exp:"La Viviane est l'un des premiers bateaux de plaisance de France !"},
+{t:"Un voilier peut aller directement face au vent.",opts:["Vrai","Faux"],ans:1,exp:"Non ! Un voilier ne peut pas aller directement face au vent. Il doit zigzaguer (louvoyer) pour remonter au vent."},
+{t:"Les Vikings utilisaient quel type de voile ?",opts:["Des voiles triangulaires","Des voiles carrées","Des voiles rondes"],ans:1,exp:"Les Vikings utilisaient des voiles carrées — très efficaces vent arrière pour traverser l'Atlantique."}
+],c2:[
+{t:"En Méditerranée, on trouve plutôt des voiles...",opts:["Carrées","Triangulaires (latines)","Rondes"],ans:1,exp:"Les voiles triangulaires latines sont typiques de la Méditerranée. Très efficaces pour remonter au vent."},
+{t:"Les Vikings ont atteint l'Amérique avant Christophe Colomb.",opts:["Vrai","Faux"],ans:0,exp:"Les Vikings (Xe siècle) ont atteint le Vinland (Amérique du Nord) environ 500 ans avant Christophe Colomb (1492) !"},
+{t:"La plate de Loire 'Fi d'galarne' servait principalement à...",opts:["La pêche en mer","Le transport de marchandises sur la Loire","Les régates"],ans:1,exp:"La plate transportait le tuffeau, le vin d'Anjou, le sel de Guérande... Sans ces plates, pas de châteaux de la Loire !"},
+{t:"Un grand voilier peut avoir plusieurs kilomètres de cordages.",opts:["Vrai","Faux"],ans:0,exp:"Oui ! Les marins devaient tous les connaître par leur nom et savoir les manier de nuit, sans lumière."},
+{t:"Les congés payés ont été créés en France en...",opts:["1914","1936","1950"],ans:1,exp:"1936, sous le Front Populaire. Pour la première fois, 2 semaines de vacances payées. Cela a révolutionné les loisirs nautiques !"}
+],c3:[
+{t:"Pourquoi les marins bretons ont-ils développé des voiles auriques très performantes au vent ?",opts:["Pour la vitesse en régate","Par nécessité : rentrer au port quelle que soit la direction du vent","Pour imiter les Méditerranéens"],ans:1,exp:"Une nécessité vitale ! Les pêcheurs bretons devaient rentrer au port par tous les temps. Une voile qui remonte bien au vent, c'est une question de survie."},
+{t:"La dorna galicienne ressemble aux bateaux bretons car les peuples celtes ont des liens historiques.",opts:["Vrai","Faux"],ans:0,exp:"La Galice et la Bretagne font partie du même arc celtique atlantique. Plus de 3000 ans d'échanges par la mer."},
+{t:"Nommer un bateau 'l'Humanité' en 1936 était un acte politique.",opts:["Vrai","Faux"],ans:0,exp:"En 1936, la France est sous le Front Populaire. Les chantiers de Pont-l'Abbé étaient proches des idées socialistes. Ce nom était un engagement."},
+{t:"Le bachot du lac de Grand-Lieu n'a pas changé de forme car la loi l'interdit.",opts:["Vrai","Faux"],ans:1,exp:"Non ! Cette forme plate est parfaitement adaptée au lac peu profond. Quand une forme fonctionne parfaitement, pourquoi la changer ?"},
+{t:"Combien de types de bateaux de pêche différents existaient en France au XIXe siècle ?",opts:["Plus de 30","Plus de 100","Plus de 300"],ans:2,exp:"Plus de 300 types ! Chaque port avait le sien. Cette extraordinaire diversité a presque entièrement disparu au XXe siècle."}
+]},
+6:{c1:[
+{t:"Comment s'appelle le cri de ralliement des ouvrières sardinières ?",opts:["Vive la sardine !","Penn Brel Aro !","À bas les patrons !"],ans:1,exp:"'Penn Brel Aro !' signifie 'Tête dure maintenant !' en breton. Le slogan de la grande grève de 1924."},
+{t:"Les ouvrières des conserveries travaillaient à partir de 8 ans.",opts:["Vrai","Faux"],ans:0,exp:"Oui, dès l'âge de 8 ans ! Les enfants travaillaient dans les usines — une réalité qui paraît inimaginable aujourd'hui."},
+{t:"Comment s'appelle la machine qui ferme les boîtes de conserve ?",opts:["L'autoclave","La sertisseuse","La friteuse"],ans:1,exp:"La sertisseuse referme hermétiquement les boîtes. L'autoclave les stérilise ensuite."},
+{t:"La boîte de conserve a été inventée grâce à Napoléon.",opts:["Vrai","Faux"],ans:0,exp:"En 1800, Napoléon lance un concours pour nourrir ses armées. Nicolas Appert gagne en 1810. La boîte métallique suit immédiatement !"},
+{t:"En 1924, combien d'ouvrières ont fait grève à Douarnenez ?",opts:["200","2000","20000"],ans:1,exp:"Plus de 2000 ouvrières ont défilé dans les rues le 21 novembre 1924 !"}
+],c2:[
+{t:"Combien de jours a duré la grève des Penn Sardin en 1924 ?",opts:["10 jours","46 jours","6 mois"],ans:1,exp:"46 jours de conflit ! Au bout de 46 jours, les patrons ont accepté une augmentation de salaire."},
+{t:"Le maire de Douarnenez en 1924 soutenait les ouvrières en grève.",opts:["Vrai","Faux"],ans:0,exp:"Daniel Le Flanchec, maire communiste, soutenait les grévistes. Il a été suspendu. Et le 1er janvier 1925, un patron a tiré sur lui !"},
+{t:"Les ouvrières mangeaient souvent sur leurs établis, faute de réfectoire.",opts:["Vrai","Faux"],ans:0,exp:"Dans la plupart des usines : réfectoires insuffisants. Certaines réchauffaient leur repas sur les autoclaves de stérilisation."},
+{t:"Quel est le nom breton des ouvrières sardinières ?",opts:["Sardinières","Penn Sardin","Komizerez"],ans:1,exp:"Penn Sardin — littéralement 'têtes de sardines'. Un surnom affectueux et revendicatif."},
+{t:"La boîte de conserve a d'abord été inventée pour nourrir les soldats.",opts:["Vrai","Faux"],ans:0,exp:"Le concours de Napoléon en 1800 visait à nourrir les armées en campagne. Nicolas Appert a inventé la stérilisation."}
+],c3:[
+{t:"L'attentat contre le maire Le Flanchec le 1er janvier 1925 a accéléré la résolution du conflit.",opts:["Vrai","Faux"],ans:0,exp:"Paradoxalement oui. L'attentat a choqué toute la France et créé une pression publique énorme sur les patrons."},
+{t:"La stérilisation en autoclave a été inventée suite à un défi lancé par Napoléon.",opts:["Vrai","Faux"],ans:0,exp:"En 1800, Napoléon lance un concours : nourrir les armées. Nicolas Appert gagne en 1810 avec la stérilisation. La boîte métallique suit — une révolution alimentaire mondiale."},
+{t:"Les ouvrières de Douarnenez travaillaient dans de meilleures conditions que dans d'autres villes.",opts:["Vrai","Faux"],ans:1,exp:"Non. Bâtiments nettoyés tous les 4-5 ans seulement, pas de vestiaires, WC immondes, eau froide uniquement..."},
+{t:"Après 46 jours de grève, les ouvrières ont obtenu +1 franc de l'heure.",opts:["Vrai","Faux"],ans:0,exp:"Oui, +1 franc/heure pour les femmes et +1,50 franc pour les hommes. Une victoire durement gagnée après 46 jours de conflit."},
+{t:"Pourquoi le rapport de la JOC (Jeunesse Ouvrière Chrétienne) est-il une source précieuse ?",opts:["C'est de la propagande syndicale","C'est un constat factuel d'une organisation catholique neutre","C'est un rapport gouvernemental"],ans:1,exp:"La JOC est une organisation catholique — pas un syndicat ouvrier. Leurs enquêteurs décrivent des faits concrets et observables. Cette neutralité rend le document d'autant plus accablant."}
+]},
+7:{c1:[
+{t:"À quoi sert un casier à homards ?",opts:["À garder les poissons","À piéger les homards et crabes","À stocker les filets"],ans:1,exp:"Le casier est posé sur le fond, l'animal rentre attiré par l'appât mais ne peut plus sortir !"},
+{t:"Le Scaur Weather est un bateau qui sert de phare flottant.",opts:["Vrai","Faux"],ans:0,exp:"Oui ! Le bateau-phare est ancré là où on ne peut pas construire de phare fixe. Peint en rouge vif pour être visible de loin."},
+{t:"Un homard vivant vaut plus cher qu'un homard mort.",opts:["Vrai","Faux"],ans:0,exp:"Oui, beaucoup plus cher ! Les homards se détériorent très vite après la mort. Le vivier permet de les garder vivants."},
+{t:"Combien de voitures faudrait-il pour faire le poids du Scaur Weather ?",opts:["5 voitures","50 voitures","500 voitures"],ans:2,exp:"534 tonnes — soit environ 500 voitures ! Et pourtant il flotte. C'est le principe d'Archimède."},
+{t:"Le cabestan servait à...",opts:["Faire cuire le poisson","Hisser les bateaux sur la cale avec une chaîne","Mesurer la profondeur de l'eau"],ans:1,exp:"Le cabestan à manivelle enroule une chaîne pour hisser le bateau sur la cale inclinée, hors de portée des vagues."}
+],c2:[
+{t:"Les cabanes de pêcheurs bretonnes sont aujourd'hui considérées comme du patrimoine.",opts:["Vrai","Faux"],ans:0,exp:"Autrefois utilitaires et méprisées, elles sont aujourd'hui classées et restaurées dans certains sites."},
+{t:"La pêche au casier est durable car elle est très sélective.",opts:["Vrai","Faux"],ans:0,exp:"Très sélective : pas de prises accidentelles, pas de dégâts sur le fond marin. Les pêcheurs ont inventé cette méthode bien avant qu'on parle de pêche durable !"},
+{t:"Pourquoi le bateau-phare Scaur Weather est-il peint en rouge ?",opts:["C'était la couleur des bateaux anglais","Pour être identifiable depuis d'autres bateaux, même dans la brume","Pour faire joli"],ans:1,exp:"Le rouge est la couleur la plus visible en mer, surtout dans la brume et par mauvais temps. Une nécessité de sécurité maritime."},
+{t:"Les 'marques' des pêcheurs désignent des alignements visuels pour se repérer en mer.",opts:["Vrai","Faux"],ans:0,exp:"Exactement ! En alignant deux points fixes à terre, on obtient une ligne de position. Deux lignes croisées = position précise."},
+{t:"Un pêcheur professionnel peut poser jusqu'à combien de casiers ?",opts:["30","300","3000"],ans:1,exp:"Jusqu'à 300 casiers ! Chacun doit être localisé précisément. Avant le GPS, avec des bouées et les repères à terre."}
+],c3:[
+{t:"Pourquoi la côte du Cap Sizun est-elle dangereuse ?",opts:["C'est une publicité touristique","Courants violents, vents forts, rochers affleurants — naufrages fréquents","C'est une expression de fierté bretonne"],ans:1,exp:"Un avertissement sérieux : courants violents, vents forts, rochers. L'expression 'La pointe du Raz, si tu la passes, tu l'auras' dissuadait les marins imprudents."},
+{t:"Le vivier en bois est perforé pour permettre la circulation de l'eau.",opts:["Vrai","Faux"],ans:0,exp:"Indispensable ! Les homards ont besoin d'eau de mer oxygénée. Le bois perforé maintient une circulation d'eau tout en retenant les animaux."},
+{t:"Les savoirs de navigation 'aux marques' ont été préservés dans des ouvrages spécialisés.",opts:["Vrai","Faux"],ans:1,exp:"Non, jamais écrits. Uniquement transmis oralement. Avec la motorisation et le GPS, la nécessité a disparu — et avec les derniers vieux marins, le savoir aussi."},
+{t:"Le principe d'Archimède explique pourquoi le Scaur Weather (534 tonnes) flotte.",opts:["Vrai","Faux"],ans:0,exp:"Un corps flotte si le poids de l'eau qu'il déplace est supérieur à son propre poids. C'est le volume de la coque qui compte, pas le poids brut du métal."},
+{t:"Les casiers à homards d'aujourd'hui sont très différents de ceux du XIXe siècle.",opts:["Vrai","Faux"],ans:1,exp:"Non ! Les casiers modernes sont presque identiques à ceux du XIXe siècle. Quand une technique fonctionne parfaitement, pourquoi la changer ?"}
+]},
+8:{c1:[
+{t:"Comment s'appelle l'abri fait de voiles tendues sur les bateaux ?",opts:["Le cabanage","Le mouillage","Le bivouac"],ans:0,exp:"Le cabanage ! Voiles tendues sur des rames formant une tente qui protège du vent et de la pluie."},
+{t:"L'Humanité a une voile à l'avant appelée la misaine.",opts:["Vrai","Faux"],ans:0,exp:"Le 'canot à misaine' n'a qu'une seule voile, à l'avant. Plus simple et moins coûteux que les grandes chaloupes."},
+{t:"L'Humanité remplace les grandes chaloupes car...",opts:["Elle est plus rapide","Elle nécessite moins d'équipage et coûte moins cher","Elle pêche plus de poisson"],ans:1,exp:"Les grandes chaloupes coûtaient trop cher en main-d'œuvre lors des crises sardinières. L'Humanité était la réponse pratique à la crise économique."},
+{t:"La Place de l'Enfer, près du musée, est un lieu maudit.",opts:["Vrai","Faux"],ans:1,exp:"Non ! Ce nom vient d'une déformation du breton — pas d'un lieu maudit. Un des nombreux faux-amis toponymiques bretons."},
+{t:"Les marins pouvaient dormir dans le cabanage en attendant de lever les filets.",opts:["Vrai","Faux"],ans:0,exp:"Exactement ! On pouvait y dormir, manger et se protéger pendant les 12 à 18 heures d'une sortie de pêche."}
+],c2:[
+{t:"Où l'Humanité a-t-elle été construite ?",opts:["À Douarnenez","À Pont-l'Abbé","À Brest"],ans:1,exp:"Au chantier Le Gall à Pont-l'Abbé, en 1936. Pont-l'Abbé est le cœur du Pays Bigouden, en Finistère."},
+{t:"Nommer un bateau 'l'Humanité' en 1936 avait une signification politique.",opts:["Vrai","Faux"],ans:0,exp:"En 1936, la France est sous le Front Populaire. 'L'Humanité' est aussi le nom du journal communiste. Ce choix n'était pas neutre."},
+{t:"Le cabanage est spécifique aux bateaux bretons.",opts:["Vrai","Faux"],ans:1,exp:"Non, le cabanage est universel ! Partout dans le monde, les marins ont improvisé des abris à bord. Même principe en camping ou bivouac."},
+{t:"La Place de l'Enfer tire son nom d'une déformation du breton.",opts:["Vrai","Faux"],ans:0,exp:"Oui, un exemple parmi d'autres de noms bretons déformés lors de la francisation. Un faux-ami toponymique !"},
+{t:"L'Humanité appartient à la famille des petits lugres — canots à misaine.",opts:["Vrai","Faux"],ans:0,exp:"Oui ! Ces petits bateaux ont remplacé les grands lugres trop coûteux lors des crises sardinières de la fin XIXe - début XXe siècle."}
+],c3:[
+{t:"Pourquoi les crises sardinières ont-elles poussé à créer des bateaux plus petits ?",opts:["Pour réduire la consommation de carburant","Pour diminuer les coûts en équipage lors des périodes de faible pêche","Pour naviguer plus loin"],ans:1,exp:"Moins de poisson = moins de revenus. Les grandes chaloupes nécessitaient 5 hommes. Le canot à misaine, avec 2-3 hommes, maintenait l'activité à moindre coût."},
+{t:"Le cabanage est une technique exclusive aux pêcheurs bretons.",opts:["Vrai","Faux"],ans:1,exp:"Non, le cabanage est universel et intemporel. On retrouve des abris similaires chez des marins du monde entier, depuis des millénaires."},
+{t:"Quel événement de 1936 a indirectement favorisé la plaisance ?",opts:["Le Front Populaire et les congés payés","La Seconde Guerre Mondiale","La crise économique"],ans:0,exp:"Les congés payés de 1936 ont donné aux travailleurs du temps libre. Pour la 1ère fois, des familles modestes pouvaient naviguer pour le plaisir."},
+{t:"La Place de l'Enfer illustre la francisation de noms bretons.",opts:["Vrai","Faux"],ans:0,exp:"La francisation a produit de nombreux faux-amis toponymiques : des noms bretons dont la transcription en français sonne sinistre alors que le breton d'origine était banal."},
+{t:"Le chantier Le Gall de Pont-l'Abbé a construit l'Humanité en 1936.",opts:["Vrai","Faux"],ans:0,exp:"Oui. Pont-l'Abbé est le cœur du Pays Bigouden, une région de forte tradition maritime en Finistère."}
+]}
+};
+
+/* ─────────────────────────────────────────
+   NAVIGATION GÉNÉRALE
+───────────────────────────────────────── */
+let currentPage='home';
+function goPage(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.bn-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  document.getElementById('btn-'+p).classList.add('active');
+  currentPage=p;
+  window.scrollTo(0,0);
+}
+
+function showTips(){
+  const b=document.getElementById('tips-block');
+  b.style.display=b.style.display==='none'?'block':'none';
+}
+
+/* ─────────────────────────────────────────
+   SALLES
+───────────────────────────────────────── */
 let curSection=-1;
-function showSections(){
-  document.getElementById('view-sections').style.display='block';
+function showSectionsList(){
+  document.getElementById('view-sections-list').style.display='block';
   document.getElementById('view-section').style.display='none';
   document.getElementById('view-item').style.display='none';
   window.scrollTo(0,0);
 }
 function showSection(idx){
   curSection=idx;
-  const s=data[idx];
-  document.getElementById('view-sections').style.display='none';
+  const s=sectionsData[idx];
+  document.getElementById('view-sections-list').style.display='none';
   document.getElementById('view-item').style.display='none';
   document.getElementById('view-section').style.display='block';
-  document.getElementById('prog-section').style.width=Math.round(((idx+1)/data.length)*100)+'%';
+  document.getElementById('prog-section').style.width=Math.round(((idx+1)/sectionsData.length)*100)+'%';
   let h='';
   if(s.img)h+=`<img class="detail-img" src="${s.img}" alt="${s.name}" onerror="this.style.display='none'"/>`;
-  h+=`<div class="detail-body"><div class="detail-salle">Salle ${idx+1} / ${data.length}</div><div class="detail-title">${s.name}</div><div class="tag">${s.subtitle}</div><div class="detail-text">${s.intro.replace(/\n/g,'<br>')}</div><div class="tip"><div class="tip-label">Conseil animateur</div><div class="tip-text">${s.tip}</div></div><div class="funfact"><div class="funfact-label">Le saviez-vous ?</div><div class="funfact-text">${s.funfact}</div></div><div class="sep"></div><div class="items-title">${s.items.length} objet${s.items.length>1?'s':''} dans cette salle</div><div class="items-list">`;
+  h+=`<div class="detail-body">`;
+  h+=`<div class="detail-salle">Salle ${idx+1} / ${sectionsData.length}</div>`;
+  h+=`<div class="detail-title">${s.name}</div>`;
+  h+=`<div class="tag">${s.subtitle}</div>`;
+  h+=`<div class="detail-text">${s.intro}</div>`;
+  h+=`<div class="tip"><div class="tip-label">Conseil animateur</div><div class="tip-text">${s.tip}</div></div>`;
+  h+=`<div class="funfact"><div class="funfact-label">Le saviez-vous ?</div><div class="funfact-text">${s.funfact}</div></div>`;
+  h+=`<div class="sep"></div>`;
+  h+=`<div class="items-title">${s.items.length} objet${s.items.length>1?'s':''} dans cette salle</div>`;
+  h+=`<div class="items-list">`;
   s.items.forEach((item,i)=>{h+=`<div class="item-row" onclick="showItem(${idx},${i})"><div class="item-row-name">${item.name}</div><div class="item-row-arrow">›</div></div>`;});
   h+=`</div>`;
-  const prev=idx>0?`<button class="nav-btn" onclick="showSection(${idx-1})">← ${data[idx-1].name}</button>`:`<button class="nav-btn" disabled>←</button>`;
-  const next=idx<data.length-1?`<button class="nav-btn" onclick="showSection(${idx+1})">${data[idx+1].name} →</button>`:`<button class="nav-btn" disabled>→</button>`;
+  const prev=idx>0?`<button class="nav-btn" onclick="showSection(${idx-1})">← ${sectionsData[idx-1].name}</button>`:`<button class="nav-btn" disabled>←</button>`;
+  const next=idx<sectionsData.length-1?`<button class="nav-btn" onclick="showSection(${idx+1})">${sectionsData[idx+1].name} →</button>`:`<button class="nav-btn" disabled>→</button>`;
   h+=`<div class="nav-row">${prev}${next}</div></div>`;
   document.getElementById('section-detail').innerHTML=h;
   window.scrollTo(0,0);
 }
 function showItem(sIdx,iIdx){
   curSection=sIdx;
-  const s=data[sIdx],item=s.items[iIdx];
-  document.getElementById('view-sections').style.display='none';
+  const s=sectionsData[sIdx],item=s.items[iIdx];
+  document.getElementById('view-sections-list').style.display='none';
   document.getElementById('view-section').style.display='none';
   document.getElementById('view-item').style.display='block';
   document.getElementById('back-section-btn').onclick=()=>showSection(sIdx);
   let h='';
   if(item.img)h+=`<img class="detail-img" src="${item.img}" alt="${item.name}" onerror="this.style.display='none'"/>`;
-  h+=`<div class="detail-body"><div class="detail-salle">${s.name}</div><div class="detail-title">${item.name}</div><div class="detail-text">${item.text.replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>')}</div><div class="tip"><div class="tip-label">Conseil animateur</div><div class="tip-text">${item.tip}</div></div><div class="funfact"><div class="funfact-label">Le saviez-vous ?</div><div class="funfact-text">${item.funfact}</div></div>`;
+  h+=`<div class="detail-body"><div class="detail-salle">${s.name}</div><div class="detail-title">${item.name}</div><div class="detail-text">${item.text}</div>`;
+  h+=`<div class="tip"><div class="tip-label">Conseil animateur</div><div class="tip-text">${item.tip}</div></div>`;
+  h+=`<div class="funfact"><div class="funfact-label">Le saviez-vous ?</div><div class="funfact-text">${item.funfact}</div></div>`;
   const prev=iIdx>0?`<button class="nav-btn" onclick="showItem(${sIdx},${iIdx-1})">← ${s.items[iIdx-1].name}</button>`:`<button class="nav-btn" disabled>←</button>`;
   const next=iIdx<s.items.length-1?`<button class="nav-btn" onclick="showItem(${sIdx},${iIdx+1})">${s.items[iIdx+1].name} →</button>`:`<button class="nav-btn" disabled>→</button>`;
   h+=`<div class="nav-row">${prev}${next}</div></div>`;
   document.getElementById('item-detail').innerHTML=h;
   window.scrollTo(0,0);
 }
+
+/* ─────────────────────────────────────────
+   BATEAUX EXTÉRIEURS
+───────────────────────────────────────── */
+function showBoatsList(){
+  document.getElementById('view-boats-list').style.display='block';
+  document.getElementById('view-boat').style.display='none';
+  window.scrollTo(0,0);
+}
+function showBoat(idx){
+  const b=boatsData[idx];
+  document.getElementById('view-boats-list').style.display='none';
+  document.getElementById('view-boat').style.display='block';
+  let h='';
+  if(b.img)h+=`<img class="detail-img" src="${b.img}" alt="${b.name}" onerror="this.style.display='none'"/>`;
+  h+=`<div class="detail-body"><div class="detail-salle">${b.type}</div><div class="detail-title">${b.name}</div>`;
+  h+=`<div class="detail-text">${b.text}</div>`;
+  h+=`<div class="tip"><div class="tip-label">Conseil animateur</div><div class="tip-text">${b.tip}</div></div>`;
+  h+=`<div class="funfact"><div class="funfact-label">Le saviez-vous ?</div><div class="funfact-text">${b.funfact}</div></div>`;
+  const prev=idx>0?`<button class="nav-btn" onclick="showBoat(${idx-1})">← ${boatsData[idx-1].name}</button>`:`<button class="nav-btn" disabled>←</button>`;
+  const next=idx<boatsData.length-1?`<button class="nav-btn" onclick="showBoat(${idx+1})">${boatsData[idx+1].name} →</button>`:`<button class="nav-btn" disabled>→</button>`;
+  h+=`<div class="nav-row">${prev}${next}</div></div>`;
+  document.getElementById('boat-detail').innerHTML=h;
+  window.scrollTo(0,0);
+}
+
+/* ─────────────────────────────────────────
+   QUIZ
+───────────────────────────────────────── */
+let currentQuizCycle=0;
+const quizState={};
+
+function setQuizCycle(ci){
+  currentQuizCycle=ci;
+  [0,1,2].forEach(i=>{
+    document.getElementById('qtab-'+i).classList.toggle('active',i===ci);
+  });
+  renderQuizList();
+}
+
+function showQuizList(){
+  document.getElementById('view-quiz-list').style.display='block';
+  document.getElementById('view-quiz-session').style.display='none';
+  window.scrollTo(0,0);
+}
+
+function renderQuizList(){
+  const list=document.getElementById('quiz-sections-list');
+  list.innerHTML='';
+  sectionsData.forEach((s,i)=>{
+    const key=`s${i}_c${currentQuizCycle}`;
+    const state=quizState[key];
+    let score='';
+    if(state&&state.done){
+      const qs=getQuizQs(i,currentQuizCycle);
+      const correct=qs.filter((_,qi)=>state.answers[qi]===qs[qi].ans).length;
+      score=`<span style="font-size:11px;color:${correct===qs.length?'#3B6D11':'#185FA5'};font-weight:700;">${correct}/${qs.length}</span>`;
+    } else {
+      score=`<span style="font-size:11px;color:#aaa;">—</span>`;
+    }
+    const btn=document.createElement('button');
+    btn.className='section-btn';
+    btn.innerHTML=`<div class="section-dot" style="background:${s.color}"></div><div class="section-info"><div class="section-name">${s.name}</div><div class="section-sub">${s.subtitle}</div></div>${score}`;
+    btn.onclick=()=>startQuiz(i);
+    list.appendChild(btn);
+  });
+}
+
+function getQuizQs(sIdx,ci){
+  const ckey=['c1','c2','c3'][ci];
+  return quizData[sIdx]?quizData[sIdx][ckey]||[]:[];
+}
+
+function startQuiz(sIdx){
+  document.getElementById('view-quiz-list').style.display='none';
+  document.getElementById('view-quiz-session').style.display='block';
+  const key=`s${sIdx}_c${currentQuizCycle}`;
+  if(!quizState[key])quizState[key]={answers:{},done:false};
+  renderQuizSession(sIdx);
+  window.scrollTo(0,0);
+}
+
+function renderQuizSession(sIdx){
+  const ci=currentQuizCycle;
+  const key=`s${sIdx}_c${currentQuizCycle}`;
+  const state=quizState[key];
+  const qs=getQuizQs(sIdx,ci);
+  const s=sectionsData[sIdx];
+  const cycleLabels=['Maternelle','CP–CE2','CM1–6e'];
+  let h=`<div style="background:white;border:1px solid #e0dfd8;border-radius:12px;padding:1rem 1.25rem;margin-bottom:12px;">`;
+  h+=`<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#999;margin-bottom:3px;">Quiz · ${cycleLabels[ci]}</div>`;
+  h+=`<div style="font-size:17px;font-weight:700;color:#1a1a1a;">${s.name}</div>`;
+  h+=`</div>`;
+  if(!qs.length){
+    h+=`<div style="padding:1rem;font-size:13px;color:#999;">Questions à venir pour cette salle...</div>`;
+  } else {
+    qs.forEach((q,qi)=>{
+      const answered=state.answers[qi]!==undefined;
+      h+=`<div class="q-block" id="qb-${sIdx}-${qi}">`;
+      h+=`<div class="q-num">Question ${qi+1} / ${qs.length}</div>`;
+      h+=`<div class="q-text">${q.t}</div>`;
+      h+=`<div class="q-options">`;
+      q.opts.forEach((opt,oi)=>{
+        let cls='q-opt';
+        if(answered){cls+=' disabled';if(oi===q.ans)cls+=' correct';else if(state.answers[qi]===oi)cls+=' wrong';}
+        h+=`<button class="${cls}" onclick="answerQ(${sIdx},${qi},${oi})">${opt}</button>`;
+      });
+      h+=`</div>`;
+      h+=`<div class="q-explain${answered?' visible':''}" id="exp-${sIdx}-${qi}">${q.exp}</div>`;
+      h+=`</div>`;
+    });
+    if(state.done){
+      const correct=qs.filter((_,qi)=>state.answers[qi]===qs[qi].ans).length;
+      const pct=Math.round((correct/qs.length)*100);
+      let msg=pct===100?'Parfait ! Incollables !':pct>=80?'Très bien ! Encore quelques petites choses...':pct>=60?'Pas mal ! Relisez les explications.':'Il faut revoir la salle... recommencez !';
+      h+=`<div class="quiz-score"><div class="quiz-score-num">${correct}/${qs.length}</div><div class="quiz-score-label">${pct}% de bonnes réponses</div><div class="quiz-score-msg">${msg}</div><button class="quiz-reset" onclick="resetQuiz(${sIdx})">Recommencer</button></div>`;
+    }
+  }
+  document.getElementById('quiz-session-content').innerHTML=h;
+}
+
+function answerQ(sIdx,qi,val){
+  const key=`s${sIdx}_c${currentQuizCycle}`;
+  const state=quizState[key];
+  if(state.answers[qi]!==undefined)return;
+  state.answers[qi]=val;
+  const qs=getQuizQs(sIdx,currentQuizCycle);
+  if(Object.keys(state.answers).length===qs.length)state.done=true;
+  renderQuizSession(sIdx);
+  renderQuizList();
+}
+
+function resetQuiz(sIdx){
+  const key=`s${sIdx}_c${currentQuizCycle}`;
+  quizState[key]={answers:{},done:false};
+  renderQuizSession(sIdx);
+  renderQuizList();
+}
+
+/* ─────────────────────────────────────────
+   INIT
+───────────────────────────────────────── */
 (function init(){
   const list=document.getElementById('sections-list');
-  data.forEach((s,i)=>{
+  sectionsData.forEach((s,i)=>{
     const btn=document.createElement('button');
     btn.className='section-btn';
     btn.innerHTML=`<div class="section-dot" style="background:${s.color}"></div><div class="section-info"><div class="section-name">${s.name}</div><div class="section-sub">${s.subtitle}</div></div><div class="section-count">${s.items.length} objets</div>`;
     btn.onclick=()=>showSection(i);
     list.appendChild(btn);
   });
+  const bl=document.getElementById('boats-list');
+  boatsData.forEach((b,i)=>{
+    const card=document.createElement('div');
+    card.className='boat-card';
+    card.innerHTML=`${b.img?`<img class="boat-card-img" src="${b.img}" alt="${b.name}" onerror="this.style.display='none'"/>`:''}
+<div class="boat-card-body">
+<div class="boat-card-type">${b.type}</div>
+<div class="boat-card-name">${b.name}</div>
+<div class="boat-card-desc">${b.text.substring(0,100)}...</div>
+</div>`;
+    card.onclick=()=>showBoat(i);
+    bl.appendChild(card);
+  });
+  renderQuizList();
 })();
 </script>
 </body>
